@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+// not sure what this does
+package algocomm;
+
+message Request {
+  bool requested = 1;
+}
+
+message Location {
+  double x = 1;
+  double y = 2;
+}
+
+service AlgoComms{
+  rpc getLocation(google.protobuf.Empty) returns (Location);
+}
