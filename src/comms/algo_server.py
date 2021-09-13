@@ -20,6 +20,8 @@ class Listener(algocomm_pb2_grpc.AlgoCommsServicer):
 
 # create a gRPC server
 class Algo_Server:
+    def __init__(self):
+        return
 
     def connect(self):
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

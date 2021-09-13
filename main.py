@@ -1,8 +1,8 @@
-from src.comms import multicomms
+from src.comms.multicomms import Multicomms
 
 
 def init():
-    test = multicomms.Multicomms()
+    test = Multicomms()
     test.start()
 
 

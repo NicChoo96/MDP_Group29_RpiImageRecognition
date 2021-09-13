@@ -5,6 +5,8 @@ import time
 
 
 class Stm_Client:
+    def __init__(self):
+        return
 
     def ping_request(self):
         print("Sending a ping request to the STM")
