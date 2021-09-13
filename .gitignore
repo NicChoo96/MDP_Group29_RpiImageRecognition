@@ -4,11 +4,6 @@ imagezmq/
 # VS Code
 .vscode
 
-# frames/
-**/pthread1
-**/server2
-**/client2
-src/ImageRecognition/images/detection.png
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
