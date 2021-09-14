@@ -1,12 +1,12 @@
 import grpc
-from src.comms import hdcomm_pb2
-from src.comms import hdcomm_pb2_grpc
 import time
 
+from src.comms import hdcomm_pb2
+from src.comms import hdcomm_pb2_grpc
 
 class Stm_Client:
     def __init__(self):
-        return
+        a = 1
 
     def ping_request(self):
         print("Sending a ping request to the STM")
