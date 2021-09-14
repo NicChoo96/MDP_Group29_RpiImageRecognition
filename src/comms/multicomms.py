@@ -21,5 +21,6 @@ class Multicomms:
             self.algo.connect()
             self.android.connect()
             self.stm.ping_request()
+
         except:
             return
