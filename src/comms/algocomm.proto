@@ -16,4 +16,5 @@ message Location {
 
 service AlgoComms{
   rpc getLocation(google.protobuf.Empty) returns (Location);
+  rpc test(google.protobuf.Empty) returns (google.protobuf.Empty);
 }
