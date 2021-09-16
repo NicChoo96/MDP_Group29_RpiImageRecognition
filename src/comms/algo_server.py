@@ -1,3 +1,4 @@
+import concurrent.futures
 import threading
 
 import grpc
@@ -52,10 +53,14 @@ class Algo_Server:
         try:
             while True:
                 print("Number of threads: " + str(threading.active_count()))
-                time.sleep(600)
+                time.sleep(86400)
+
         except KeyboardInterrupt:
             print("Keyboard Interrupt")
             self.server.stop(0)
+
+    def disconnect(self):
+        print("Disconnecting Algo server")
 
 
 if __name__ == "__main__":

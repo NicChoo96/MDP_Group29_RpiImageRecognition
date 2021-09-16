@@ -75,11 +75,11 @@ class Android_Server:
         try:
             data = self.client_sock.recv(1024).strip()
             if len(data) == 0: return None
-            print ("From android: [%s]" % data)
+            print("From android: [%s]" % data)
             return data
 
         except Exception as error:
-            print ("Android read failed: " + str(error))
+            print("Android read failed: " + str(error))
             raise error
 
     def write(self, message):

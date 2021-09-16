@@ -6,6 +6,7 @@ from src.comms import hdcomm_pb2_grpc
 
 
 class Stm_Client:
+
     empty = hdcomm_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
 
     def __init__(self):
@@ -19,9 +20,12 @@ class Stm_Client:
     # sends a ping request to ensure connection with stm
     def ping_request(self):
         print("Sending a ping request to the STM")
-        request = hdcomm_pb2.PingResponse(device_time=time.time())
-        response = self.stub.Ping(request)
-        print(response)
+        return
+
+        #time.sleep(30)
+        #request = hdcomm_pb2.PingResponse(device_time=time.time())
+        #response = self.stub.Ping(request)
+        #print(response)
 
     def move_request(self, radius_index, distance):
         print("Sending a move request")
