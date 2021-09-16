@@ -3,6 +3,7 @@ imagezmq/
 
 # VS Code
 .vscode
+.vs
 
 
 # Byte-compiled / optimized / DLL files
