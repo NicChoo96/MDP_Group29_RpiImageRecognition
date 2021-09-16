@@ -2,11 +2,10 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from src.comms import algocomm_pb2 as src_dot_comms_dot_algocomm__pb2
 
 
-class AlgoCommsStub(object):
+class algoStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -15,58 +14,94 @@ class AlgoCommsStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.getLocation = channel.unary_unary(
-                '/algocomm.AlgoComms/getLocation',
-                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-                response_deserializer=src_dot_comms_dot_algocomm__pb2.Location.FromString,
+        self.ReceiveCoordinates = channel.unary_unary(
+                '/algo/ReceiveCoordinates',
+                request_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+                response_deserializer=src_dot_comms_dot_algocomm__pb2.ObstacleString.FromString,
                 )
-        self.test = channel.unary_unary(
-                '/algocomm.AlgoComms/test',
-                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        self.Move = channel.unary_unary(
+                '/algo/Move',
+                request_serializer=src_dot_comms_dot_algocomm__pb2.MoveRequest.SerializeToString,
+                response_deserializer=src_dot_comms_dot_algocomm__pb2.MoveResponse.FromString,
+                )
+        self.GetRadii = channel.unary_unary(
+                '/algo/GetRadii',
+                request_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+                response_deserializer=src_dot_comms_dot_algocomm__pb2.RadiiResponse.FromString,
+                )
+        self.MoveVirtual = channel.unary_unary(
+                '/algo/MoveVirtual',
+                request_serializer=src_dot_comms_dot_algocomm__pb2.RobotPosition.SerializeToString,
+                response_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
                 )
 
 
-class AlgoCommsServicer(object):
+class algoServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def getLocation(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+    def ReceiveCoordinates(self, request, context):
+        """Client (algo) receives obstacle information from server (rPi).
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def test(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+    def Move(self, request, context):
+        """Commands the robot to move.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetRadii(self, request, context):
+        """Obtain a list of available turn radii.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def MoveVirtual(self, request, context):
+        """Client (algo) sends the coordinates of the robot to the server (rPi).
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_AlgoCommsServicer_to_server(servicer, server):
+def add_algoServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'getLocation': grpc.unary_unary_rpc_method_handler(
-                    servicer.getLocation,
-                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                    response_serializer=src_dot_comms_dot_algocomm__pb2.Location.SerializeToString,
+            'ReceiveCoordinates': grpc.unary_unary_rpc_method_handler(
+                    servicer.ReceiveCoordinates,
+                    request_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
+                    response_serializer=src_dot_comms_dot_algocomm__pb2.ObstacleString.SerializeToString,
             ),
-            'test': grpc.unary_unary_rpc_method_handler(
-                    servicer.test,
-                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            'Move': grpc.unary_unary_rpc_method_handler(
+                    servicer.Move,
+                    request_deserializer=src_dot_comms_dot_algocomm__pb2.MoveRequest.FromString,
+                    response_serializer=src_dot_comms_dot_algocomm__pb2.MoveResponse.SerializeToString,
+            ),
+            'GetRadii': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetRadii,
+                    request_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
+                    response_serializer=src_dot_comms_dot_algocomm__pb2.RadiiResponse.SerializeToString,
+            ),
+            'MoveVirtual': grpc.unary_unary_rpc_method_handler(
+                    servicer.MoveVirtual,
+                    request_deserializer=src_dot_comms_dot_algocomm__pb2.RobotPosition.FromString,
+                    response_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'algocomm.AlgoComms', rpc_method_handlers)
+            'algo', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class AlgoComms(object):
+class algo(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def getLocation(request,
+    def ReceiveCoordinates(request,
             target,
             options=(),
             channel_credentials=None,
@@ -76,14 +111,14 @@ class AlgoComms(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/algocomm.AlgoComms/getLocation',
-            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            src_dot_comms_dot_algocomm__pb2.Location.FromString,
+        return grpc.experimental.unary_unary(request, target, '/algo/ReceiveCoordinates',
+            src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+            src_dot_comms_dot_algocomm__pb2.ObstacleString.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def test(request,
+    def Move(request,
             target,
             options=(),
             channel_credentials=None,
@@ -93,8 +128,42 @@ class AlgoComms(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/algocomm.AlgoComms/test',
-            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        return grpc.experimental.unary_unary(request, target, '/algo/Move',
+            src_dot_comms_dot_algocomm__pb2.MoveRequest.SerializeToString,
+            src_dot_comms_dot_algocomm__pb2.MoveResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetRadii(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/algo/GetRadii',
+            src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+            src_dot_comms_dot_algocomm__pb2.RadiiResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def MoveVirtual(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/algo/MoveVirtual',
+            src_dot_comms_dot_algocomm__pb2.RobotPosition.SerializeToString,
+            src_dot_comms_dot_algocomm__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

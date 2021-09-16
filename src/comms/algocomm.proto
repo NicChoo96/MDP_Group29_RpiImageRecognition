@@ -1,20 +1,65 @@
 syntax = "proto3";
 
-import "google/protobuf/empty.proto";
+option java_package = "com.mdp.grpc";
+option java_multiple_files = true;
 
-// not sure what this does
-package algocomm;
+service algo {
+  // Client (algo) receives obstacle information from server (rPi).
+  rpc ReceiveCoordinates(Empty) returns (ObstacleString) {}
 
-message Request {
-  bool requested = 1;
+  // Commands the robot to move.
+  rpc Move (MoveRequest) returns (MoveResponse);
+
+  // Obtain a list of available turn radii.
+  rpc GetRadii (Empty) returns (RadiiResponse);
+
+  // Client (algo) sends the coordinates of the robot to the server (rPi).
+  rpc MoveVirtual(RobotPosition) returns (Empty) {}
+  
 }
 
-message Location {
-  double x = 1;
-  double y = 2;
+message Empty {
 }
 
-service AlgoComms{
-  rpc getLocation(google.protobuf.Empty) returns (Location);
-  rpc test(google.protobuf.Empty) returns (google.protobuf.Empty);
+// Obstacle string ("OBS:X:Y:Dir:X:Y:Dir:...") to be received from rPi.
+message ObstacleString {
+  string obstacles = 1;
+}
+
+// Current robot coordinates to be sent to the rPi.
+// Format is "RP:X:Y:Dir"
+// X = 0 to 19
+// Y = 0 to 19
+// Dir = N, S, E, or W
+message RobotPosition {
+  string robotCoordinates = 1;
+}
+
+message MoveRequest {
+  // 0-based index of radius in the indices array.
+  //
+  // `0` for straight moves.
+  //
+  // Set negative to have the turning center on the left, positive to have
+  // the turning center on the right.
+  int32 radius_indexed = 1;
+  // Distance to move.
+  //
+  // Specified in units of metres.
+  // Use negative distances for reversing.
+  double distance = 2;
+}
+
+message MoveResponse {
+  // Estimated time for move to complete.
+  //
+  // Specified in units of seconds.
+  double time_required = 1;
+}
+
+message RadiiResponse {
+  // Array of available turn radii.
+  //
+  // The first value is +inf for straight line motion.
+  repeated double radii = 1;
 }

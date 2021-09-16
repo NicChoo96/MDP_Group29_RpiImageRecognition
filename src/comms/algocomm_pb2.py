@@ -11,34 +11,57 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='src/comms/algocomm.proto',
-  package='algocomm',
+  package='',
   syntax='proto3',
-  serialized_options=None,
+  serialized_options=b'\n\014com.mdp.grpcP\001',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18src/comms/algocomm.proto\x12\x08\x61lgocomm\x1a\x1bgoogle/protobuf/empty.proto\"\x1c\n\x07Request\x12\x11\n\trequested\x18\x01 \x01(\x08\" \n\x08Location\x12\t\n\x01x\x18\x01 \x01(\x01\x12\t\n\x01y\x18\x02 \x01(\x01\x32~\n\tAlgoComms\x12\x39\n\x0bgetLocation\x12\x16.google.protobuf.Empty\x1a\x12.algocomm.Location\x12\x36\n\x04test\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Emptyb\x06proto3'
-  ,
-  dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
+  serialized_pb=b'\n\x18src/comms/algocomm.proto\"\x07\n\x05\x45mpty\"#\n\x0eObstacleString\x12\x11\n\tobstacles\x18\x01 \x01(\t\")\n\rRobotPosition\x12\x18\n\x10robotCoordinates\x18\x01 \x01(\t\"7\n\x0bMoveRequest\x12\x16\n\x0eradius_indexed\x18\x01 \x01(\x05\x12\x10\n\x08\x64istance\x18\x02 \x01(\x01\"%\n\x0cMoveResponse\x12\x15\n\rtime_required\x18\x01 \x01(\x01\"\x1e\n\rRadiiResponse\x12\r\n\x05radii\x18\x01 \x03(\x01\x32\xa9\x01\n\x04\x61lgo\x12/\n\x12ReceiveCoordinates\x12\x06.Empty\x1a\x0f.ObstacleString\"\x00\x12#\n\x04Move\x12\x0c.MoveRequest\x1a\r.MoveResponse\x12\"\n\x08GetRadii\x12\x06.Empty\x1a\x0e.RadiiResponse\x12\'\n\x0bMoveVirtual\x12\x0e.RobotPosition\x1a\x06.Empty\"\x00\x42\x10\n\x0c\x63om.mdp.grpcP\x01\x62\x06proto3'
+)
 
 
 
 
-_REQUEST = _descriptor.Descriptor(
-  name='Request',
-  full_name='algocomm.Request',
+_EMPTY = _descriptor.Descriptor(
+  name='Empty',
+  full_name='Empty',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=28,
+  serialized_end=35,
+)
+
+
+_OBSTACLESTRING = _descriptor.Descriptor(
+  name='ObstacleString',
+  full_name='ObstacleString',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='requested', full_name='algocomm.Request.requested', index=0,
-      number=1, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
+      name='obstacles', full_name='ObstacleString.obstacles', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -54,28 +77,60 @@ _REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=67,
-  serialized_end=95,
+  serialized_start=37,
+  serialized_end=72,
 )
 
 
-_LOCATION = _descriptor.Descriptor(
-  name='Location',
-  full_name='algocomm.Location',
+_ROBOTPOSITION = _descriptor.Descriptor(
+  name='RobotPosition',
+  full_name='RobotPosition',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='x', full_name='algocomm.Location.x', index=0,
-      number=1, type=1, cpp_type=5, label=1,
-      has_default_value=False, default_value=float(0),
+      name='robotCoordinates', full_name='RobotPosition.robotCoordinates', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=74,
+  serialized_end=115,
+)
+
+
+_MOVEREQUEST = _descriptor.Descriptor(
+  name='MoveRequest',
+  full_name='MoveRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='radius_indexed', full_name='MoveRequest.radius_indexed', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='y', full_name='algocomm.Location.y', index=1,
+      name='distance', full_name='MoveRequest.distance', index=1,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -93,63 +148,180 @@ _LOCATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=97,
-  serialized_end=129,
+  serialized_start=117,
+  serialized_end=172,
 )
 
-DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
-DESCRIPTOR.message_types_by_name['Location'] = _LOCATION
+
+_MOVERESPONSE = _descriptor.Descriptor(
+  name='MoveResponse',
+  full_name='MoveResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='time_required', full_name='MoveResponse.time_required', index=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=174,
+  serialized_end=211,
+)
+
+
+_RADIIRESPONSE = _descriptor.Descriptor(
+  name='RadiiResponse',
+  full_name='RadiiResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='radii', full_name='RadiiResponse.radii', index=0,
+      number=1, type=1, cpp_type=5, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=213,
+  serialized_end=243,
+)
+
+DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
+DESCRIPTOR.message_types_by_name['ObstacleString'] = _OBSTACLESTRING
+DESCRIPTOR.message_types_by_name['RobotPosition'] = _ROBOTPOSITION
+DESCRIPTOR.message_types_by_name['MoveRequest'] = _MOVEREQUEST
+DESCRIPTOR.message_types_by_name['MoveResponse'] = _MOVERESPONSE
+DESCRIPTOR.message_types_by_name['RadiiResponse'] = _RADIIRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Request = _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), {
-  'DESCRIPTOR' : _REQUEST,
+Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
+  'DESCRIPTOR' : _EMPTY,
   '__module__' : 'src.comms.algocomm_pb2'
-  # @@protoc_insertion_point(class_scope:algocomm.Request)
+  # @@protoc_insertion_point(class_scope:Empty)
   })
-_sym_db.RegisterMessage(Request)
+_sym_db.RegisterMessage(Empty)
 
-Location = _reflection.GeneratedProtocolMessageType('Location', (_message.Message,), {
-  'DESCRIPTOR' : _LOCATION,
+ObstacleString = _reflection.GeneratedProtocolMessageType('ObstacleString', (_message.Message,), {
+  'DESCRIPTOR' : _OBSTACLESTRING,
   '__module__' : 'src.comms.algocomm_pb2'
-  # @@protoc_insertion_point(class_scope:algocomm.Location)
+  # @@protoc_insertion_point(class_scope:ObstacleString)
   })
-_sym_db.RegisterMessage(Location)
+_sym_db.RegisterMessage(ObstacleString)
+
+RobotPosition = _reflection.GeneratedProtocolMessageType('RobotPosition', (_message.Message,), {
+  'DESCRIPTOR' : _ROBOTPOSITION,
+  '__module__' : 'src.comms.algocomm_pb2'
+  # @@protoc_insertion_point(class_scope:RobotPosition)
+  })
+_sym_db.RegisterMessage(RobotPosition)
+
+MoveRequest = _reflection.GeneratedProtocolMessageType('MoveRequest', (_message.Message,), {
+  'DESCRIPTOR' : _MOVEREQUEST,
+  '__module__' : 'src.comms.algocomm_pb2'
+  # @@protoc_insertion_point(class_scope:MoveRequest)
+  })
+_sym_db.RegisterMessage(MoveRequest)
+
+MoveResponse = _reflection.GeneratedProtocolMessageType('MoveResponse', (_message.Message,), {
+  'DESCRIPTOR' : _MOVERESPONSE,
+  '__module__' : 'src.comms.algocomm_pb2'
+  # @@protoc_insertion_point(class_scope:MoveResponse)
+  })
+_sym_db.RegisterMessage(MoveResponse)
+
+RadiiResponse = _reflection.GeneratedProtocolMessageType('RadiiResponse', (_message.Message,), {
+  'DESCRIPTOR' : _RADIIRESPONSE,
+  '__module__' : 'src.comms.algocomm_pb2'
+  # @@protoc_insertion_point(class_scope:RadiiResponse)
+  })
+_sym_db.RegisterMessage(RadiiResponse)
 
 
+DESCRIPTOR._options = None
 
-_ALGOCOMMS = _descriptor.ServiceDescriptor(
-  name='AlgoComms',
-  full_name='algocomm.AlgoComms',
+_ALGO = _descriptor.ServiceDescriptor(
+  name='algo',
+  full_name='algo',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=131,
-  serialized_end=257,
+  serialized_start=246,
+  serialized_end=415,
   methods=[
   _descriptor.MethodDescriptor(
-    name='getLocation',
-    full_name='algocomm.AlgoComms.getLocation',
+    name='ReceiveCoordinates',
+    full_name='algo.ReceiveCoordinates',
     index=0,
     containing_service=None,
-    input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    output_type=_LOCATION,
+    input_type=_EMPTY,
+    output_type=_OBSTACLESTRING,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='test',
-    full_name='algocomm.AlgoComms.test',
+    name='Move',
+    full_name='algo.Move',
     index=1,
     containing_service=None,
-    input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    input_type=_MOVEREQUEST,
+    output_type=_MOVERESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetRadii',
+    full_name='algo.GetRadii',
+    index=2,
+    containing_service=None,
+    input_type=_EMPTY,
+    output_type=_RADIIRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='MoveVirtual',
+    full_name='algo.MoveVirtual',
+    index=3,
+    containing_service=None,
+    input_type=_ROBOTPOSITION,
+    output_type=_EMPTY,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
 ])
-_sym_db.RegisterServiceDescriptor(_ALGOCOMMS)
+_sym_db.RegisterServiceDescriptor(_ALGO)
 
-DESCRIPTOR.services_by_name['AlgoComms'] = _ALGOCOMMS
+DESCRIPTOR.services_by_name['algo'] = _ALGO
 
 # @@protoc_insertion_point(module_scope)
