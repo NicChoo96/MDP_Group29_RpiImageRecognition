@@ -86,7 +86,7 @@ class Android_Server:
         try:
             print("Writing to android: ")
             print(message)
-            self.client.sock.send(message)
+            self.client_sock.send(message)
 
         except Exception as error:
             print("Android write failed: " + str(error))

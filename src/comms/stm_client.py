@@ -20,16 +20,21 @@ class Stm_Client:
     # sends a ping request to ensure connection with stm
     def ping_request(self):
         print("Sending a ping request to the STM")
-        return
-
-        #time.sleep(30)
-        #request = hdcomm_pb2.PingResponse(device_time=time.time())
-        #response = self.stub.Ping(request)
-        #print(response)
+        
+        try:
+            request = hdcomm_pb2.PingResponse(device_time=time.time())
+            response = self.stub.Ping(request)
+            print(response)
+            return
+        
+        except Exception as error:
+            print("Ping request failed")
+            raise error
+            
 
     def move_request(self, radius_index, distance):
         print("Sending a move request")
-        request = hdcomm_pb2.MoveRequest(radius_index=radius_index, distance=distance)
+        request = hdcomm_pb2.MoveRequest(radius_indexed=radius_index, distance=distance)
         response = self.stub.Move(request)
         print(response)
 
