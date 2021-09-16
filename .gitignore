@@ -1,9 +1,8 @@
-.idea
+../../rpi/.idea
 imagezmq/
 
 # VS Code
 .vscode
-.vs
 
 
 # Byte-compiled / optimized / DLL files
@@ -113,7 +112,7 @@ celerybeat.pid
 .env
 .venv
 env/
-venv/
+../rpi/venv/
 ENV/
 env.bak/
 venv.bak/
