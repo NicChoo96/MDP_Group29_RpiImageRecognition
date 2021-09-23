@@ -40,7 +40,7 @@ class algoStub(object):
         self.GetPicture = channel.unary_unary(
                 '/algo.algo/GetPicture',
                 request_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
-                response_deserializer=src_dot_comms_dot_algocomm__pb2.PicBytes.FromString,
+                response_deserializer=src_dot_comms_dot_algocomm__pb2.PicArray.FromString,
                 )
 
 
@@ -111,7 +111,7 @@ def add_algoServicer_to_server(servicer, server):
             'GetPicture': grpc.unary_unary_rpc_method_handler(
                     servicer.GetPicture,
                     request_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
-                    response_serializer=src_dot_comms_dot_algocomm__pb2.PicBytes.SerializeToString,
+                    response_serializer=src_dot_comms_dot_algocomm__pb2.PicArray.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -207,6 +207,6 @@ class algo(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/algo.algo/GetPicture',
             src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
-            src_dot_comms_dot_algocomm__pb2.PicBytes.FromString,
+            src_dot_comms_dot_algocomm__pb2.PicArray.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

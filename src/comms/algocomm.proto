@@ -19,7 +19,7 @@ service algo {
   rpc MoveVirtual(RobotPosition) returns (Empty) {}
 
   // Client receives image from server
-  rpc GetPicture (Empty) returns (PicBytes) {}
+  rpc GetPicture (Empty) returns (PicArray) {}
 }
 
 message Empty {
@@ -68,6 +68,6 @@ message RadiiResponse {
   repeated double radii = 1;
 }
 
-message PicBytes {
-  bytes image = 1;
+message PicArray {
+  repeated int32 image = 1;
 }
