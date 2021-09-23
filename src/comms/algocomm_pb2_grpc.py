@@ -6,7 +6,10 @@ from src.comms import algocomm_pb2 as src_dot_comms_dot_algocomm__pb2
 
 
 class algoStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """option java_package = "com.mdp.grpc";
+    option java_multiple_files = true;
+
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -15,29 +18,37 @@ class algoStub(object):
             channel: A grpc.Channel.
         """
         self.ReceiveCoordinates = channel.unary_unary(
-                '/algo/ReceiveCoordinates',
+                '/algo.algo/ReceiveCoordinates',
                 request_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
                 response_deserializer=src_dot_comms_dot_algocomm__pb2.ObstacleString.FromString,
                 )
         self.Move = channel.unary_unary(
-                '/algo/Move',
+                '/algo.algo/Move',
                 request_serializer=src_dot_comms_dot_algocomm__pb2.MoveRequest.SerializeToString,
                 response_deserializer=src_dot_comms_dot_algocomm__pb2.MoveResponse.FromString,
                 )
         self.GetRadii = channel.unary_unary(
-                '/algo/GetRadii',
+                '/algo.algo/GetRadii',
                 request_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
                 response_deserializer=src_dot_comms_dot_algocomm__pb2.RadiiResponse.FromString,
                 )
         self.MoveVirtual = channel.unary_unary(
-                '/algo/MoveVirtual',
+                '/algo.algo/MoveVirtual',
                 request_serializer=src_dot_comms_dot_algocomm__pb2.RobotPosition.SerializeToString,
                 response_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
+                )
+        self.GetPicture = channel.unary_unary(
+                '/algo.algo/GetPicture',
+                request_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+                response_deserializer=src_dot_comms_dot_algocomm__pb2.PicArray.FromString,
                 )
 
 
 class algoServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """option java_package = "com.mdp.grpc";
+    option java_multiple_files = true;
+
+    """
 
     def ReceiveCoordinates(self, request, context):
         """Client (algo) receives obstacle information from server (rPi).
@@ -67,6 +78,13 @@ class algoServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetPicture(self, request, context):
+        """Client receives image from server
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_algoServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -90,15 +108,23 @@ def add_algoServicer_to_server(servicer, server):
                     request_deserializer=src_dot_comms_dot_algocomm__pb2.RobotPosition.FromString,
                     response_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
             ),
+            'GetPicture': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetPicture,
+                    request_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
+                    response_serializer=src_dot_comms_dot_algocomm__pb2.PicArray.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'algo', rpc_method_handlers)
+            'algo.algo', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
 class algo(object):
-    """Missing associated documentation comment in .proto file."""
+    """option java_package = "com.mdp.grpc";
+    option java_multiple_files = true;
+
+    """
 
     @staticmethod
     def ReceiveCoordinates(request,
@@ -111,7 +137,7 @@ class algo(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/algo/ReceiveCoordinates',
+        return grpc.experimental.unary_unary(request, target, '/algo.algo/ReceiveCoordinates',
             src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
             src_dot_comms_dot_algocomm__pb2.ObstacleString.FromString,
             options, channel_credentials,
@@ -128,7 +154,7 @@ class algo(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/algo/Move',
+        return grpc.experimental.unary_unary(request, target, '/algo.algo/Move',
             src_dot_comms_dot_algocomm__pb2.MoveRequest.SerializeToString,
             src_dot_comms_dot_algocomm__pb2.MoveResponse.FromString,
             options, channel_credentials,
@@ -145,7 +171,7 @@ class algo(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/algo/GetRadii',
+        return grpc.experimental.unary_unary(request, target, '/algo.algo/GetRadii',
             src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
             src_dot_comms_dot_algocomm__pb2.RadiiResponse.FromString,
             options, channel_credentials,
@@ -162,8 +188,25 @@ class algo(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/algo/MoveVirtual',
+        return grpc.experimental.unary_unary(request, target, '/algo.algo/MoveVirtual',
             src_dot_comms_dot_algocomm__pb2.RobotPosition.SerializeToString,
             src_dot_comms_dot_algocomm__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetPicture(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/algo.algo/GetPicture',
+            src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+            src_dot_comms_dot_algocomm__pb2.PicArray.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

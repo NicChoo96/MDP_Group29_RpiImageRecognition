@@ -1,7 +1,9 @@
 syntax = "proto3";
 
-option java_package = "com.mdp.grpc";
-option java_multiple_files = true;
+package algo;
+
+//option java_package = "com.mdp.grpc";
+//option java_multiple_files = true;
 
 service algo {
   // Client (algo) receives obstacle information from server (rPi).

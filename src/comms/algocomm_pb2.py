@@ -15,11 +15,11 @@ _sym_db = _symbol_database.Default()
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='src/comms/algocomm.proto',
-  package='',
+  package='algo',
   syntax='proto3',
-  serialized_options=b'\n\014com.mdp.grpcP\001',
+  serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18src/comms/algocomm.proto\"\x07\n\x05\x45mpty\"#\n\x0eObstacleString\x12\x11\n\tobstacles\x18\x01 \x01(\t\")\n\rRobotPosition\x12\x18\n\x10robotCoordinates\x18\x01 \x01(\t\"7\n\x0bMoveRequest\x12\x16\n\x0eradius_indexed\x18\x01 \x01(\x05\x12\x10\n\x08\x64istance\x18\x02 \x01(\x01\"%\n\x0cMoveResponse\x12\x15\n\rtime_required\x18\x01 \x01(\x01\"\x1e\n\rRadiiResponse\x12\r\n\x05radii\x18\x01 \x03(\x01\x32\xa9\x01\n\x04\x61lgo\x12/\n\x12ReceiveCoordinates\x12\x06.Empty\x1a\x0f.ObstacleString\"\x00\x12#\n\x04Move\x12\x0c.MoveRequest\x1a\r.MoveResponse\x12\"\n\x08GetRadii\x12\x06.Empty\x1a\x0e.RadiiResponse\x12\'\n\x0bMoveVirtual\x12\x0e.RobotPosition\x1a\x06.Empty\"\x00\x42\x10\n\x0c\x63om.mdp.grpcP\x01\x62\x06proto3'
+  serialized_pb=b'\n\x18src/comms/algocomm.proto\x12\x04\x61lgo\"\x07\n\x05\x45mpty\"#\n\x0eObstacleString\x12\x11\n\tobstacles\x18\x01 \x01(\t\")\n\rRobotPosition\x12\x18\n\x10robotCoordinates\x18\x01 \x01(\t\"7\n\x0bMoveRequest\x12\x16\n\x0eradius_indexed\x18\x01 \x01(\x05\x12\x10\n\x08\x64istance\x18\x02 \x01(\x01\"%\n\x0cMoveResponse\x12\x15\n\rtime_required\x18\x01 \x01(\x01\"\x1e\n\rRadiiResponse\x12\r\n\x05radii\x18\x01 \x03(\x01\"\x19\n\x08PicArray\x12\r\n\x05image\x18\x01 \x03(\x05\x32\xfe\x01\n\x04\x61lgo\x12\x39\n\x12ReceiveCoordinates\x12\x0b.algo.Empty\x1a\x14.algo.ObstacleString\"\x00\x12-\n\x04Move\x12\x11.algo.MoveRequest\x1a\x12.algo.MoveResponse\x12,\n\x08GetRadii\x12\x0b.algo.Empty\x1a\x13.algo.RadiiResponse\x12\x31\n\x0bMoveVirtual\x12\x13.algo.RobotPosition\x1a\x0b.algo.Empty\"\x00\x12+\n\nGetPicture\x12\x0b.algo.Empty\x1a\x0e.algo.PicArray\"\x00\x62\x06proto3'
 )
 
 
@@ -27,7 +27,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _EMPTY = _descriptor.Descriptor(
   name='Empty',
-  full_name='Empty',
+  full_name='algo.Empty',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -45,21 +45,21 @@ _EMPTY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=28,
-  serialized_end=35,
+  serialized_start=34,
+  serialized_end=41,
 )
 
 
 _OBSTACLESTRING = _descriptor.Descriptor(
   name='ObstacleString',
-  full_name='ObstacleString',
+  full_name='algo.ObstacleString',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='obstacles', full_name='ObstacleString.obstacles', index=0,
+      name='obstacles', full_name='algo.ObstacleString.obstacles', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -77,21 +77,21 @@ _OBSTACLESTRING = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=37,
-  serialized_end=72,
+  serialized_start=43,
+  serialized_end=78,
 )
 
 
 _ROBOTPOSITION = _descriptor.Descriptor(
   name='RobotPosition',
-  full_name='RobotPosition',
+  full_name='algo.RobotPosition',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='robotCoordinates', full_name='RobotPosition.robotCoordinates', index=0,
+      name='robotCoordinates', full_name='algo.RobotPosition.robotCoordinates', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -109,28 +109,28 @@ _ROBOTPOSITION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=74,
-  serialized_end=115,
+  serialized_start=80,
+  serialized_end=121,
 )
 
 
 _MOVEREQUEST = _descriptor.Descriptor(
   name='MoveRequest',
-  full_name='MoveRequest',
+  full_name='algo.MoveRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='radius_indexed', full_name='MoveRequest.radius_indexed', index=0,
+      name='radius_indexed', full_name='algo.MoveRequest.radius_indexed', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='distance', full_name='MoveRequest.distance', index=1,
+      name='distance', full_name='algo.MoveRequest.distance', index=1,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -148,21 +148,21 @@ _MOVEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=117,
-  serialized_end=172,
+  serialized_start=123,
+  serialized_end=178,
 )
 
 
 _MOVERESPONSE = _descriptor.Descriptor(
   name='MoveResponse',
-  full_name='MoveResponse',
+  full_name='algo.MoveResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='time_required', full_name='MoveResponse.time_required', index=0,
+      name='time_required', full_name='algo.MoveResponse.time_required', index=0,
       number=1, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -180,21 +180,21 @@ _MOVERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=174,
-  serialized_end=211,
+  serialized_start=180,
+  serialized_end=217,
 )
 
 
 _RADIIRESPONSE = _descriptor.Descriptor(
   name='RadiiResponse',
-  full_name='RadiiResponse',
+  full_name='algo.RadiiResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='radii', full_name='RadiiResponse.radii', index=0,
+      name='radii', full_name='algo.RadiiResponse.radii', index=0,
       number=1, type=1, cpp_type=5, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -212,8 +212,40 @@ _RADIIRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=213,
-  serialized_end=243,
+  serialized_start=219,
+  serialized_end=249,
+)
+
+
+_PICARRAY = _descriptor.Descriptor(
+  name='PicArray',
+  full_name='algo.PicArray',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='image', full_name='algo.PicArray.image', index=0,
+      number=1, type=5, cpp_type=1, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=251,
+  serialized_end=276,
 )
 
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
@@ -222,66 +254,73 @@ DESCRIPTOR.message_types_by_name['RobotPosition'] = _ROBOTPOSITION
 DESCRIPTOR.message_types_by_name['MoveRequest'] = _MOVEREQUEST
 DESCRIPTOR.message_types_by_name['MoveResponse'] = _MOVERESPONSE
 DESCRIPTOR.message_types_by_name['RadiiResponse'] = _RADIIRESPONSE
+DESCRIPTOR.message_types_by_name['PicArray'] = _PICARRAY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
   'DESCRIPTOR' : _EMPTY,
   '__module__' : 'src.comms.algocomm_pb2'
-  # @@protoc_insertion_point(class_scope:Empty)
+  # @@protoc_insertion_point(class_scope:algo.Empty)
   })
 _sym_db.RegisterMessage(Empty)
 
 ObstacleString = _reflection.GeneratedProtocolMessageType('ObstacleString', (_message.Message,), {
   'DESCRIPTOR' : _OBSTACLESTRING,
   '__module__' : 'src.comms.algocomm_pb2'
-  # @@protoc_insertion_point(class_scope:ObstacleString)
+  # @@protoc_insertion_point(class_scope:algo.ObstacleString)
   })
 _sym_db.RegisterMessage(ObstacleString)
 
 RobotPosition = _reflection.GeneratedProtocolMessageType('RobotPosition', (_message.Message,), {
   'DESCRIPTOR' : _ROBOTPOSITION,
   '__module__' : 'src.comms.algocomm_pb2'
-  # @@protoc_insertion_point(class_scope:RobotPosition)
+  # @@protoc_insertion_point(class_scope:algo.RobotPosition)
   })
 _sym_db.RegisterMessage(RobotPosition)
 
 MoveRequest = _reflection.GeneratedProtocolMessageType('MoveRequest', (_message.Message,), {
   'DESCRIPTOR' : _MOVEREQUEST,
   '__module__' : 'src.comms.algocomm_pb2'
-  # @@protoc_insertion_point(class_scope:MoveRequest)
+  # @@protoc_insertion_point(class_scope:algo.MoveRequest)
   })
 _sym_db.RegisterMessage(MoveRequest)
 
 MoveResponse = _reflection.GeneratedProtocolMessageType('MoveResponse', (_message.Message,), {
   'DESCRIPTOR' : _MOVERESPONSE,
   '__module__' : 'src.comms.algocomm_pb2'
-  # @@protoc_insertion_point(class_scope:MoveResponse)
+  # @@protoc_insertion_point(class_scope:algo.MoveResponse)
   })
 _sym_db.RegisterMessage(MoveResponse)
 
 RadiiResponse = _reflection.GeneratedProtocolMessageType('RadiiResponse', (_message.Message,), {
   'DESCRIPTOR' : _RADIIRESPONSE,
   '__module__' : 'src.comms.algocomm_pb2'
-  # @@protoc_insertion_point(class_scope:RadiiResponse)
+  # @@protoc_insertion_point(class_scope:algo.RadiiResponse)
   })
 _sym_db.RegisterMessage(RadiiResponse)
 
+PicArray = _reflection.GeneratedProtocolMessageType('PicArray', (_message.Message,), {
+  'DESCRIPTOR' : _PICARRAY,
+  '__module__' : 'src.comms.algocomm_pb2'
+  # @@protoc_insertion_point(class_scope:algo.PicArray)
+  })
+_sym_db.RegisterMessage(PicArray)
 
-DESCRIPTOR._options = None
+
 
 _ALGO = _descriptor.ServiceDescriptor(
   name='algo',
-  full_name='algo',
+  full_name='algo.algo',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=246,
-  serialized_end=415,
+  serialized_start=279,
+  serialized_end=533,
   methods=[
   _descriptor.MethodDescriptor(
     name='ReceiveCoordinates',
-    full_name='algo.ReceiveCoordinates',
+    full_name='algo.algo.ReceiveCoordinates',
     index=0,
     containing_service=None,
     input_type=_EMPTY,
@@ -291,7 +330,7 @@ _ALGO = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='Move',
-    full_name='algo.Move',
+    full_name='algo.algo.Move',
     index=1,
     containing_service=None,
     input_type=_MOVEREQUEST,
@@ -301,7 +340,7 @@ _ALGO = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetRadii',
-    full_name='algo.GetRadii',
+    full_name='algo.algo.GetRadii',
     index=2,
     containing_service=None,
     input_type=_EMPTY,
@@ -311,11 +350,21 @@ _ALGO = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='MoveVirtual',
-    full_name='algo.MoveVirtual',
+    full_name='algo.algo.MoveVirtual',
     index=3,
     containing_service=None,
     input_type=_ROBOTPOSITION,
     output_type=_EMPTY,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetPicture',
+    full_name='algo.algo.GetPicture',
+    index=4,
+    containing_service=None,
+    input_type=_EMPTY,
+    output_type=_PICARRAY,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
