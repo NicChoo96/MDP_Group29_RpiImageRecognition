@@ -2,6 +2,7 @@ import os
 import time
 import concurrent.futures
 import threading
+import grpc
 
 from picamera import PiCamera
 from picamera.array import PiRGBArray
@@ -139,15 +140,15 @@ class Multicomms:
         
         print(image)    
         array = image.reshape(-1)
-        print(array)
+        #print(array)
         return array
 
     def process_pic(self):
-        channel = grpc.insecure_channel('192.168.50.37:10001')
+        channel = grpc.insecure_channel('192.168.1.80:10009')
         stub = imagecomm_pb2_grpc.ImageCommStub(channel)
         empty = imagecomm_pb2.Empty()
-        request = imagecomm_pb2.PicArray()
         picture = self.take_picture()
+        request = imagecomm_pb2.PicArray()
         request.image.extend(picture)
         result = stub.ProcessImage(empty)
         print("Image processing...")

@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from image import imagecomm_pb2 as image_dot_imagecomm__pb2
+import imagecomm_pb2 as image_dot_imagecomm__pb2
 
 
 class ImageCommStub(object):

@@ -1,3 +1,4 @@
+import grpc
 import threading
 
 import imagecomm_pb2
@@ -19,13 +20,13 @@ class Listener(imagecomm_pb2_grpc.ImageCommServicer):
 class Image_Server:
 
     def __init__(self):
-        self.algo_server = Listener()
+        # self.algo_server = Listener()
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
         imagecomm_pb2_grpc.add_ImageCommServicer_to_server(Listener(), self.server)
-        self.server.add_insecure_port('0.0.0.0:10001')
+        self.server.add_insecure_port('0.0.0.0:10009')
 
     def connect(self):
-        print('Starting Image Server on port: 10001.')
+        print('Starting Image Server on port: 10009')
         self.server.start()
         try:
             while True:

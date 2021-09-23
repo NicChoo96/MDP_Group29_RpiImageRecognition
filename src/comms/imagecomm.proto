@@ -3,7 +3,7 @@ syntax = "proto3";
 package imagecomm;
 
 service ImageComm {
-  rpc ProcessImage (Empty) returns (PicArray) {}
+  rpc ProcessImage (PicArray) returns (ProcessResult) {}
 }
 
 message Empty {
@@ -11,4 +11,8 @@ message Empty {
 
 message PicArray {
   repeated int32 image = 1;
+}
+
+message ProcessResult {
+  int32 result = 1;
 }
