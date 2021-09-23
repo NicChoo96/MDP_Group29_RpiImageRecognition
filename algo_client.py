@@ -4,8 +4,10 @@ from src.comms import algocomm_pb2
 from src.comms import algocomm_pb2_grpc
 
 # open a gRPC channel
-# channel = grpc.insecure_channel('192.168.1.216:9999')
-channel = grpc.insecure_channel('127.0.0.1:9999')
+# At home
+channel = grpc.insecure_channel('192.168.50.37:9999')
+# in school
+#channel = grpc.insecure_channel('127.0.0.1:9999')
 
 # create a valid request message
 # number = algocomm_pb2.Number(value=16)
@@ -20,4 +22,4 @@ empty = algocomm_pb2.Empty()
 #print(response)
 
 image = stub.GetPicture(empty)
-print(image)
+print(image.decode())

@@ -53,19 +53,19 @@ class Multicomms:
             #self.android.connect()
             #self.stm.ping_request()
             t1 = threading.Thread(target=self.algo.connect)
-            t2 = threading.Thread(target=self.take_picture)
+            #t2 = threading.Thread(target=self.take_picture)
             #t2 = threading.Thread(target=self.checklist_a1)
             #t3 = threading.Thread(target=self.read_android)
             #t4 = threading.Thread(target=self.write_android, args=['Hi RPI, MDPGRP29'])
             
             t1.start()
-            t2.start()
-            print("checklist")
+            #t2.start()
+            #print("checklist")
             #t3.start()
             #t4.start()
-            t2.join()
-            print("check list end")
+            #t2.join()
             t1.join()
+            print("end")
             
 
 
@@ -118,14 +118,14 @@ class Multicomms:
 
     def take_picture(self):
         try:
-            camera = PiCamera(resolution = '1920x1080')
+            camera = PiCamera(resolution = '640x480')
             # 3D RGB numpy array (row, col, colour)
             picArray = PiRGBArray(camera)
             
             # camera warm up time
             time.sleep(2)
             # OpenCV takes bgr
-            camera.capture(picArray, format='rgb')
+            camera.capture(picArray, format='bgr')
             image = picArray.array
             camera.close()
 
@@ -133,7 +133,10 @@ class Multicomms:
 
         except Exception as error:
             print('Error while taking picture: ' + str(error))
+            
         
+        array = bytes(image)
+        print(array)
         return image
             
         
