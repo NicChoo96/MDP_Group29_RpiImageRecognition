@@ -10,6 +10,9 @@ from src.comms import algo_server
 from src.comms import android_server
 from src.comms import stm_client
 
+from src.comms import imagecomm_pb2
+from src.comms import imagecomm_pb2_grpc
+
 
 # import stmclient.py
 class Multicomms:
@@ -53,17 +56,17 @@ class Multicomms:
             #self.android.connect()
             #self.stm.ping_request()
             t1 = threading.Thread(target=self.algo.connect)
-            #t2 = threading.Thread(target=self.take_picture)
+            t2 = threading.Thread(target=self.process_pic)
             #t2 = threading.Thread(target=self.checklist_a1)
             #t3 = threading.Thread(target=self.read_android)
             #t4 = threading.Thread(target=self.write_android, args=['Hi RPI, MDPGRP29'])
             
             t1.start()
-            #t2.start()
+            t2.start()
             #print("checklist")
             #t3.start()
             #t4.start()
-            #t2.join()
+            t2.join()
             t1.join()
             print("end")
             
@@ -138,6 +141,15 @@ class Multicomms:
         array = image.reshape(-1)
         print(array)
         return array
-            
-        
+
+    def process_pic(self):
+        channel = grpc.insecure_channel('192.168.50.37:10001')
+        stub = imagecomm_pb2_grpc.ImageCommStub(channel)
+        empty = imagecomm_pb2.Empty()
+        request = imagecomm_pb2.PicArray()
+        picture = self.take_picture()
+        request.image.extend(picture)
+        result = stub.ProcessImage(empty)
+        print("Image processing...")
+        print(result)
 
