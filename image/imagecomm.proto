@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package imagecomm;
+
+service ImageComm {
+  rpc ProcessImage (Empty) returns (PicArray) {}
+}
+
+message Empty {
+}
+
+message PicArray {
+  repeated int32 image = 1;
+}
