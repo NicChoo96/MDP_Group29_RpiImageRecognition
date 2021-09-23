@@ -15,7 +15,9 @@ service algo {
 
   // Client (algo) sends the coordinates of the robot to the server (rPi).
   rpc MoveVirtual(RobotPosition) returns (Empty) {}
-  
+
+  // Client receives image from server
+  rpc GetPicture (Empty) returns (PicArray) {}
 }
 
 message Empty {
@@ -62,4 +64,8 @@ message RadiiResponse {
   //
   // The first value is +inf for straight line motion.
   repeated double radii = 1;
+}
+
+message PicArray {
+  repeated int32 image = 1;
 }

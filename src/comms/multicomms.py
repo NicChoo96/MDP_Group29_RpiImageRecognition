@@ -3,6 +3,9 @@ import time
 import concurrent.futures
 import threading
 
+from piCamera import PiCamera
+from piCamera.array import PiRGBArray
+
 from src.comms import algo_server
 from src.comms import android_server
 from src.comms import stm_client
@@ -111,7 +114,23 @@ class Multicomms:
     def write_android(self, message):
         time.sleep(20)
         self.android.write(message)
-            
+
+    def take_picture(self):
+        try:
+            camera = PiCamera(resolution = '1920x1080')
+            # 3D RGB numpy array (row, col, colour)
+            picArray = PiRGBArray(camera)
+
+            camera.capture(picArray, format='rgb')
+            image = picArray.array
+            camera.close()
+
+            print('Image taken successfully')
+
+        except Exception as error:
+            print('Error while taking picture: ' + str(error))
+
+        return image
             
         
 

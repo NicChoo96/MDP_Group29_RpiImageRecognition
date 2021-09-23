@@ -7,6 +7,7 @@ import time
 
 from src.comms import algocomm_pb2
 from src.comms import algocomm_pb2_grpc
+from src.comms import multicomms
 
 
 class Listener(algocomm_pb2_grpc.algoServicer):
@@ -38,6 +39,11 @@ class Listener(algocomm_pb2_grpc.algoServicer):
 
     def MoveVirtual(self, request, context):
         robot_coordinates = request.robotCoordinates
+
+    def GetPicture(self, request, context):
+        response = algocomm_pb2.PicArray()
+        response.image = multicomms.Multicomms().take_picture()
+        return response
 
 
 class Algo_Server:
