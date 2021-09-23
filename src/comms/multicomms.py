@@ -133,11 +133,11 @@ class Multicomms:
 
         except Exception as error:
             print('Error while taking picture: ' + str(error))
-            
         
-        array = bytes(image)
+        print(image)    
+        array = image.reshape(-1)
         print(array)
-        return image
+        return array
             
         
 

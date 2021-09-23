@@ -1,25 +1,30 @@
-# Not our problem
+# Get image from the rpi server and stitch them together
 import grpc
+import cv2
+import numpy as np
+from PIL import Image
 from src.comms import algocomm_pb2
 from src.comms import algocomm_pb2_grpc
 
-# open a gRPC channel
-# At home
+# Delon's home
 channel = grpc.insecure_channel('192.168.50.37:9999')
 # in school
 #channel = grpc.insecure_channel('127.0.0.1:9999')
-
-# create a valid request message
-# number = algocomm_pb2.Number(value=16)
-#algocomm_pb2.Request(requested=True)
-
-# create a stub (client)
-# temporary sub for yet-to-be-developed code
 stub = algocomm_pb2_grpc.algoStub(channel)
 empty = algocomm_pb2.Empty()
-# make the call
-#response = stub.ReceiveCoordinates(empty)
-#print(response)
 
 image = stub.GetPicture(empty)
-print(image.decode())
+array = []
+array.append(image.image)
+a = np.array(array)
+newarr = a.reshape(480,640,3)
+# reshape and form as an image?
+print(newarr.shape)
+print(type(newarr))
+print(newarr)
+
+cv2.imwrite('image.png',newarr)
+#im = cv2.imread('image.png')
+#cv2.imshow('Test', im)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

@@ -42,7 +42,8 @@ class Listener(algocomm_pb2_grpc.algoServicer):
 
     def GetPicture(self, request, context):
         response = algocomm_pb2.PicArray()
-        response.image = multicomms.Multicomms().take_picture()
+        picture = multicomms.Multicomms().take_picture()
+        response.image.extend(picture) 
         return response
 
 
