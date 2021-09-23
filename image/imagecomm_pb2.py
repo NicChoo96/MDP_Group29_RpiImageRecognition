@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x15image/imagecomm.proto\x12\timagecomm\"\x07\n\x05\x45mpty\"\x19\n\x08PicArray\x12\r\n\x05image\x18\x01 \x03(\x05\x32\x44\n\tImageComm\x12\x37\n\x0cProcessImage\x12\x10.imagecomm.Empty\x1a\x13.imagecomm.PicArray\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x15image/imagecomm.proto\x12\timagecomm\"\x07\n\x05\x45mpty\"\x19\n\x08PicArray\x12\r\n\x05image\x18\x01 \x03(\x05\"\x1f\n\rProcessResult\x12\x0e\n\x06result\x18\x01 \x01(\x05\x32L\n\tImageComm\x12?\n\x0cProcessImage\x12\x13.imagecomm.PicArray\x1a\x18.imagecomm.ProcessResult\"\x00\x62\x06proto3'
 )
 
 
@@ -81,8 +81,41 @@ _PICARRAY = _descriptor.Descriptor(
   serialized_end=70,
 )
 
+
+_PROCESSRESULT = _descriptor.Descriptor(
+  name='ProcessResult',
+  full_name='imagecomm.ProcessResult',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='imagecomm.ProcessResult.result', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=72,
+  serialized_end=103,
+)
+
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
 DESCRIPTOR.message_types_by_name['PicArray'] = _PICARRAY
+DESCRIPTOR.message_types_by_name['ProcessResult'] = _PROCESSRESULT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
@@ -99,6 +132,13 @@ PicArray = _reflection.GeneratedProtocolMessageType('PicArray', (_message.Messag
   })
 _sym_db.RegisterMessage(PicArray)
 
+ProcessResult = _reflection.GeneratedProtocolMessageType('ProcessResult', (_message.Message,), {
+  'DESCRIPTOR' : _PROCESSRESULT,
+  '__module__' : 'image.imagecomm_pb2'
+  # @@protoc_insertion_point(class_scope:imagecomm.ProcessResult)
+  })
+_sym_db.RegisterMessage(ProcessResult)
+
 
 
 _IMAGECOMM = _descriptor.ServiceDescriptor(
@@ -108,16 +148,16 @@ _IMAGECOMM = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=72,
-  serialized_end=140,
+  serialized_start=105,
+  serialized_end=181,
   methods=[
   _descriptor.MethodDescriptor(
     name='ProcessImage',
     full_name='imagecomm.ImageComm.ProcessImage',
     index=0,
     containing_service=None,
-    input_type=_EMPTY,
-    output_type=_PICARRAY,
+    input_type=_PICARRAY,
+    output_type=_PROCESSRESULT,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

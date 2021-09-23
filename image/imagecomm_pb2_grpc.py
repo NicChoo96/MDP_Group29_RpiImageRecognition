@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import imagecomm_pb2 as image_dot_imagecomm__pb2
+from image import imagecomm_pb2 as image_dot_imagecomm__pb2
 
 
 class ImageCommStub(object):
@@ -16,8 +16,8 @@ class ImageCommStub(object):
         """
         self.ProcessImage = channel.unary_unary(
                 '/imagecomm.ImageComm/ProcessImage',
-                request_serializer=image_dot_imagecomm__pb2.Empty.SerializeToString,
-                response_deserializer=image_dot_imagecomm__pb2.PicArray.FromString,
+                request_serializer=image_dot_imagecomm__pb2.PicArray.SerializeToString,
+                response_deserializer=image_dot_imagecomm__pb2.ProcessResult.FromString,
                 )
 
 
@@ -35,8 +35,8 @@ def add_ImageCommServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'ProcessImage': grpc.unary_unary_rpc_method_handler(
                     servicer.ProcessImage,
-                    request_deserializer=image_dot_imagecomm__pb2.Empty.FromString,
-                    response_serializer=image_dot_imagecomm__pb2.PicArray.SerializeToString,
+                    request_deserializer=image_dot_imagecomm__pb2.PicArray.FromString,
+                    response_serializer=image_dot_imagecomm__pb2.ProcessResult.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -60,7 +60,7 @@ class ImageComm(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/imagecomm.ImageComm/ProcessImage',
-            image_dot_imagecomm__pb2.Empty.SerializeToString,
-            image_dot_imagecomm__pb2.PicArray.FromString,
+            image_dot_imagecomm__pb2.PicArray.SerializeToString,
+            image_dot_imagecomm__pb2.ProcessResult.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
