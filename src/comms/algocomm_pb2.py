@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18src/comms/algocomm.proto\x12\x04\x61lgo\"\x07\n\x05\x45mpty\"#\n\x0eObstacleString\x12\x11\n\tobstacles\x18\x01 \x01(\t\")\n\rRobotPosition\x12\x18\n\x10robotCoordinates\x18\x01 \x01(\t\"7\n\x0bMoveRequest\x12\x16\n\x0eradius_indexed\x18\x01 \x01(\x05\x12\x10\n\x08\x64istance\x18\x02 \x01(\x01\"%\n\x0cMoveResponse\x12\x15\n\rtime_required\x18\x01 \x01(\x01\"\x1e\n\rRadiiResponse\x12\r\n\x05radii\x18\x01 \x03(\x01\"\x19\n\x08PicArray\x12\r\n\x05image\x18\x01 \x03(\x05\x32\xfe\x01\n\x04\x61lgo\x12\x39\n\x12ReceiveCoordinates\x12\x0b.algo.Empty\x1a\x14.algo.ObstacleString\"\x00\x12-\n\x04Move\x12\x11.algo.MoveRequest\x1a\x12.algo.MoveResponse\x12,\n\x08GetRadii\x12\x0b.algo.Empty\x1a\x13.algo.RadiiResponse\x12\x31\n\x0bMoveVirtual\x12\x13.algo.RobotPosition\x1a\x0b.algo.Empty\"\x00\x12+\n\nGetPicture\x12\x0b.algo.Empty\x1a\x0e.algo.PicArray\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x18src/comms/algocomm.proto\x12\x04\x61lgo\"\x07\n\x05\x45mpty\"#\n\x0eObstacleString\x12\x11\n\tobstacles\x18\x01 \x01(\t\")\n\rRobotPosition\x12\x18\n\x10robotCoordinates\x18\x01 \x01(\t\"7\n\x0bMoveRequest\x12\x16\n\x0eradius_indexed\x18\x01 \x01(\x05\x12\x10\n\x08\x64istance\x18\x02 \x01(\x01\"%\n\x0cMoveResponse\x12\x15\n\rtime_required\x18\x01 \x01(\x01\"\x1e\n\rRadiiResponse\x12\r\n\x05radii\x18\x01 \x03(\x01\"\x19\n\x08PicBytes\x12\r\n\x05image\x18\x01 \x01(\x0c\x32\xfe\x01\n\x04\x61lgo\x12\x39\n\x12ReceiveCoordinates\x12\x0b.algo.Empty\x1a\x14.algo.ObstacleString\"\x00\x12-\n\x04Move\x12\x11.algo.MoveRequest\x1a\x12.algo.MoveResponse\x12,\n\x08GetRadii\x12\x0b.algo.Empty\x1a\x13.algo.RadiiResponse\x12\x31\n\x0bMoveVirtual\x12\x13.algo.RobotPosition\x1a\x0b.algo.Empty\"\x00\x12+\n\nGetPicture\x12\x0b.algo.Empty\x1a\x0e.algo.PicBytes\"\x00\x62\x06proto3'
 )
 
 
@@ -217,18 +217,18 @@ _RADIIRESPONSE = _descriptor.Descriptor(
 )
 
 
-_PICARRAY = _descriptor.Descriptor(
-  name='PicArray',
-  full_name='algo.PicArray',
+_PICBYTES = _descriptor.Descriptor(
+  name='PicBytes',
+  full_name='algo.PicBytes',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='image', full_name='algo.PicArray.image', index=0,
-      number=1, type=5, cpp_type=1, label=3,
-      has_default_value=False, default_value=[],
+      name='image', full_name='algo.PicBytes.image', index=0,
+      number=1, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -254,7 +254,7 @@ DESCRIPTOR.message_types_by_name['RobotPosition'] = _ROBOTPOSITION
 DESCRIPTOR.message_types_by_name['MoveRequest'] = _MOVEREQUEST
 DESCRIPTOR.message_types_by_name['MoveResponse'] = _MOVERESPONSE
 DESCRIPTOR.message_types_by_name['RadiiResponse'] = _RADIIRESPONSE
-DESCRIPTOR.message_types_by_name['PicArray'] = _PICARRAY
+DESCRIPTOR.message_types_by_name['PicBytes'] = _PICBYTES
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
@@ -299,12 +299,12 @@ RadiiResponse = _reflection.GeneratedProtocolMessageType('RadiiResponse', (_mess
   })
 _sym_db.RegisterMessage(RadiiResponse)
 
-PicArray = _reflection.GeneratedProtocolMessageType('PicArray', (_message.Message,), {
-  'DESCRIPTOR' : _PICARRAY,
+PicBytes = _reflection.GeneratedProtocolMessageType('PicBytes', (_message.Message,), {
+  'DESCRIPTOR' : _PICBYTES,
   '__module__' : 'src.comms.algocomm_pb2'
-  # @@protoc_insertion_point(class_scope:algo.PicArray)
+  # @@protoc_insertion_point(class_scope:algo.PicBytes)
   })
-_sym_db.RegisterMessage(PicArray)
+_sym_db.RegisterMessage(PicBytes)
 
 
 
@@ -364,7 +364,7 @@ _ALGO = _descriptor.ServiceDescriptor(
     index=4,
     containing_service=None,
     input_type=_EMPTY,
-    output_type=_PICARRAY,
+    output_type=_PICBYTES,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
