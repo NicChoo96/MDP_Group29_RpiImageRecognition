@@ -10,7 +10,8 @@ class Stm_Client:
     empty = hdcomm_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
 
     def __init__(self):
-        self.stm_ip = '192.168.50.37'
+        #self.stm_ip = '192.168.50.37'
+        self.stm_ip = '192.168.29.29'
         self.stm_port = '10002'
         # open a gRPC channel
         self.channel = grpc.insecure_channel('{}:{}'.format(self.stm_ip, self.stm_port))

@@ -16,5 +16,8 @@ channel = grpc.insecure_channel('127.0.0.1:9999')
 stub = algocomm_pb2_grpc.algoStub(channel)
 empty = algocomm_pb2.Empty()
 # make the call
-response = stub.ReceiveCoordinates(empty)
-print(response)
+#response = stub.ReceiveCoordinates(empty)
+#print(response)
+
+image = stub.GetPicture(empty)
+print(image)

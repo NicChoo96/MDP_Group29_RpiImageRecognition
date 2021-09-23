@@ -3,8 +3,8 @@ import time
 import concurrent.futures
 import threading
 
-from piCamera import PiCamera
-from piCamera.array import PiRGBArray
+from picamera import PiCamera
+from picamera.array import PiRGBArray
 
 from src.comms import algo_server
 from src.comms import android_server
@@ -20,8 +20,8 @@ class Multicomms:
         print("Initializing Multithreading Comms...")
 
         self.algo = algo_server.Algo_Server()
-        self.android = android_server.Android_Server()
-        self.stm = stm_client.Stm_Client()
+        #self.android = android_server.Android_Server()
+        #self.stm = stm_client.Stm_Client()
 
         #with concurrent.futures.ThreadPoolExecutor() as executor:
             #f1 = executor.submit(func, arg)
@@ -50,10 +50,11 @@ class Multicomms:
 
 
         #        print(t2.results())
-            self.android.connect()
-            self.stm.ping_request()
+            #self.android.connect()
+            #self.stm.ping_request()
             t1 = threading.Thread(target=self.algo.connect)
-            t2 = threading.Thread(target=self.checklist_a1)
+            t2 = threading.Thread(target=self.take_picture)
+            #t2 = threading.Thread(target=self.checklist_a1)
             #t3 = threading.Thread(target=self.read_android)
             #t4 = threading.Thread(target=self.write_android, args=['Hi RPI, MDPGRP29'])
             
@@ -120,7 +121,10 @@ class Multicomms:
             camera = PiCamera(resolution = '1920x1080')
             # 3D RGB numpy array (row, col, colour)
             picArray = PiRGBArray(camera)
-
+            
+            # camera warm up time
+            time.sleep(2)
+            # OpenCV takes bgr
             camera.capture(picArray, format='rgb')
             image = picArray.array
             camera.close()
@@ -129,7 +133,7 @@ class Multicomms:
 
         except Exception as error:
             print('Error while taking picture: ' + str(error))
-
+        
         return image
             
         
