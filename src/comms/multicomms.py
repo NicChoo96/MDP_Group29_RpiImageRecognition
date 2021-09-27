@@ -24,8 +24,9 @@ class Multicomms:
         print("Initializing Multithreading Comms...")
 
         self.algo = algo_server.Algo_Server()
-        #self.android = android_server.Android_Server()
+        self.android = android_server.Android_Server()
         #self.stm = stm_client.Stm_Client()
+        self.obs_string = None
 
         #with concurrent.futures.ThreadPoolExecutor() as executor:
             #f1 = executor.submit(func, arg)
@@ -57,16 +58,20 @@ class Multicomms:
             #self.android.connect()
             #self.stm.ping_request()
             t1 = threading.Thread(target=self.algo.connect)
-            t2 = threading.Thread(target=self.process_pic)
+            t2 = threading.Thread(target=self.android.connect)
+            t3 = threading.Thread(target=self.read_android)
             #t2 = threading.Thread(target=self.checklist_a1)
             #t3 = threading.Thread(target=self.read_android)
             #t4 = threading.Thread(target=self.write_android, args=['Hi RPI, MDPGRP29'])
             
             t1.start()
             t2.start()
+            time.sleep(15)
+            t3.start()
             #print("checklist")
             #t3.start()
             #t4.start()
+            t3.join()
             t2.join()
             t1.join()
             print("end")
@@ -113,12 +118,27 @@ class Multicomms:
         
     def read_android(self):
         while True:
-            android_string = self.android.read()
-            print(android_string)
+            try:
+                android_string = self.android.read()
+                android_string = android_string.decode("utf-8")
+                if android_string is "":
+                    continue
+                # TODO: Check if android_string is obs
+                print("obs_string: " + android_string)
+                print("TESTHERE")
+                print(self.obs_string)
+            
+            except Exception as error:
+                print(str(error))
+                
     
     def write_android(self, message):
         time.sleep(20)
         self.android.write(message)
+        
+    def get_obs_string(self):
+        
+        return self.obs_string
 
     def take_picture(self):
         try:
@@ -145,7 +165,7 @@ class Multicomms:
 
     def process_pic(self):
         try:
-            channel = grpc.insecure_channel('192.168.1.80:12345')
+            channel = grpc.insecure_channel('127.0.0.1:12345')
             stub = imagecomm_pb2_grpc.ImageCommStub(channel)
             
             # take picture and convert it to 1D

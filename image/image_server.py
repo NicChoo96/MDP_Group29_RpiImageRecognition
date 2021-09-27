@@ -50,6 +50,7 @@ class Image_Server:
     def store_image(self,imageArr):
         imageNp = np.array(imageArr).reshape(480,640,3)
         # reshape and form as an image?
+        print(imageNp)
         print(imageNp.shape)
         print(type(imageNp))
         

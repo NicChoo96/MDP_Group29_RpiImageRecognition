@@ -16,7 +16,21 @@ class Listener(algocomm_pb2_grpc.algoServicer):
         response = algocomm_pb2.ObstacleString()
         # Get obstacles string
         # ("OBS:X:Y:Dir:X:Y:Dir:...")
-        response.obstacles = 'TEST'
+        
+        #print(multicomms.Multicomms())
+        
+        m=multicomms.Multicomms()
+        
+        #print("HERE")
+        
+        #print(m.get_obs_string())
+        response.obstacles = "Wait"
+        
+        if m.get_obs_string() is not None:
+            print("HERE")
+            response.obstacles = m.get_obs_string()
+        
+        
         return response
 
     # commands the robot to move with a given radius index and distance
@@ -40,11 +54,11 @@ class Listener(algocomm_pb2_grpc.algoServicer):
     def MoveVirtual(self, request, context):
         robot_coordinates = request.robotCoordinates
 
-    def GetPicture(self, request, context):
-        response = algocomm_pb2.PicArray()
-        picture = multicomms.Multicomms().take_picture()
-        response.image.extend(picture) 
-        return response
+    # def GetPicture(self, request, context):
+    #    response = algocomm_pb2.PicArray()
+    #    picture = multicomms.Multicomms().take_picture()
+    #    response.image.extend(picture) 
+    #    return response
 
 
 class Algo_Server:
