@@ -5,20 +5,22 @@ import threading
 import grpc
 
 from picamera import PiCamera
+
 from picamera.array import PiRGBArray
 
 from src.comms import algo_server
 from src.comms import android_server
 from src.comms import stm_client
+from src.comms import string_data
 
 from src.comms import imagecomm_pb2
 from src.comms import imagecomm_pb2_grpc
 
 
+
 # import stmclient.py
 class Multicomms:
     
-
     def __init__(self):
 
         print("Initializing Multithreading Comms...")
@@ -26,27 +28,11 @@ class Multicomms:
         self.algo = algo_server.Algo_Server()
         self.android = android_server.Android_Server()
         #self.stm = stm_client.Stm_Client()
-        self.obs_string = None
+        
+        string_data.init()
 
-        #with concurrent.futures.ThreadPoolExecutor() as executor:
-            #f1 = executor.submit(func, arg)
-            #print(f1.results()) - print when is received
-        # results = [executor.submit(do_something, 1) for _ in range(10)]
-        # for f in concurrent.futures.as_completed(results):
-        # results = executor.map(function, arg) - returns results in order of how they were started
     def start(self):
         try:
-            #t1 = threading.Thread(target=self.algo.connect)
-            #t2 = threading.Thread(target=self.stm.ping_request)
-            #t3 = threading.Thread(target=self.android.connect)
-            #t1.start()
-            #t2.start()
-            #t3.start()
-            #t3.join()
-            #t2.join()
-            #t1.join()
-
-
 
         #try:
         #    with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -76,69 +62,30 @@ class Multicomms:
             t1.join()
             print("end")
             
-
-
         except Exception as error:
             raise error
 
-    def checklist_a1(self):
-        while True:
-            radius_index = 0
-            distance = 0.001
-            android_string = self.android.read()
-            new = android_string.decode().split("'")
-            print(new)
-            print(new[0])
-            
-            if (new[0] == 'F'):
-                radius_index = 0
-                distance = 0.5
-                print("FFF")
-            elif (new[0] == 'TR'):
-                radius_index = -1
-                distance = 0.1
-                print("TRTRTR")
-            elif (new[0] == 'TL'):
-                radius_index = 1
-                distance = 0.1
-            elif (new[0] == 'R'):
-                radius_index = 0
-                distance = -0.5
-            else:
-                radius_index = 0
-                distance = 0.001
-                
-            try:
-                self.stm.move_request(radius_index,distance)
-                self.android.write("Moving...")
-                time.sleep(5)
-            except Exception as error:
-                print(error)
-                raise error
         
     def read_android(self):
         while True:
             try:
                 android_string = self.android.read()
                 android_string = android_string.decode("utf-8")
-                if android_string is "":
+                print(f"[Decoded string is...] : {android_string}]")
+                
+                if android_string is None:
                     continue
                 # TODO: Check if android_string is obs
-                print("obs_string: " + android_string)
-                print("TESTHERE")
-                print(self.obs_string)
+                string_data.obs_value = android_string
             
             except Exception as error:
                 print(str(error))
                 
     
-    def write_android(self, message):
+    def write_android(self):
         time.sleep(20)
         self.android.write(message)
-        
-    def get_obs_string(self):
-        
-        return self.obs_string
+    
 
     def take_picture(self):
         try:

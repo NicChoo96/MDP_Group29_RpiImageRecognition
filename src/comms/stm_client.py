@@ -4,7 +4,6 @@ import time
 from src.comms import hdcomm_pb2
 from src.comms import hdcomm_pb2_grpc
 
-
 class Stm_Client:
 
     empty = hdcomm_pb2.google_dot_protobuf_dot_empty__pb2.Empty()
@@ -30,14 +29,19 @@ class Stm_Client:
         
         except Exception as error:
             print("Ping request failed")
-            raise error
+            print(str(error))
             
 
     def move_request(self, radius_index, distance):
-        print("Sending a move request")
-        request = hdcomm_pb2.MoveRequest(radius_indexed=radius_index, distance=distance)
-        response = self.stub.Move(request)
-        print(response)
+        try: 
+            request = hdcomm_pb2.MoveRequest(radius_indexed=radius_index, distance=distance)
+            # rpc Move (MoveRequest) returns (MoveResponse);
+            response = self.stub.Move(request)
+            return response.time_required
+        
+        except Exception as error:
+            print("Move request failed")
+            print(str(error))
 
     def move_cancel(self):
         print("Sending a cancel move request")
@@ -46,7 +50,13 @@ class Stm_Client:
         self.stub.MoveCancel(empty)
 
     def get_radii(self):
-        print("Obtaining available turn radii")
+        try:
+            response = self.stub.GetRadii(empty)
+            return response.radii
+        
+        except Exception as error:
+            print("Get radii request failed")
+            print(str(error))
 
     def get_heading(self):
         return

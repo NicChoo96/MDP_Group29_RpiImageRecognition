@@ -7,65 +7,76 @@ import time
 
 from src.comms import algocomm_pb2
 from src.comms import algocomm_pb2_grpc
-from src.comms import multicomms
+
+from src.comms import stm_client
+from src.comms import image_client
+from src.comms import string_data
 
 
 class Listener(algocomm_pb2_grpc.algoServicer):
 
+    def __init__(self):
+        self.stm = stm_client.Stm_Client()
+        self.image = image_client.Image_Client()
+
+    
+        
     def ReceiveCoordinates(self, request, context):
         response = algocomm_pb2.ObstacleString()
         # Get obstacles string
         # ("OBS:X:Y:Dir:X:Y:Dir:...")
         
-        #print(multicomms.Multicomms())
+        obs_string = string_data.obs_value
         
-        m=multicomms.Multicomms()
+        print(f"[Sending obstaacle string to algo...]: {obs_string}")
         
-        #print("HERE")
-        
-        #print(m.get_obs_string())
-        response.obstacles = "Wait"
-        
-        if m.get_obs_string() is not None:
-            print("HERE")
-            response.obstacles = m.get_obs_string()
-        
-        
+        if m != "No value":
+            response.obstacles = m
+            
         return response
 
     # commands the robot to move with a given radius index and distance
     # returns the estimated time required for move
     def Move(self, request, context):
-        # TODO: some function to pass radius_index and distance to STM and get a return estimated time for move
+        # get the radius_index and move distance from the algo
         radius_index = request.radius_indexed
         distance = request.distance
-        est_time = 123
+        # send a move_request to the stm server, returns the time required for the move
+        time_required = stm.move_request(radius_index, distance)
+        response = algocomm_pb2.MoveResponse(time_required = time_required)
 
-        response = algocomm_pb2.MoveResponse()
-        response.time_required = est_time
+        print(f"[Algo sent a move request to the Stm]: Radius_index: {radius_index}, Distance: {distance}, Time required: {time_required}")
         return response
 
+    # rpc GetRadii (Empty) returns (RadiiResponse);
+    # get a list of available turn radii.
     def GetRadii(self, request, context):
-        response = algocomm_pb2.RadiiResponse()
-        # array of available turn radii.
-        response.radii = []
+        # send a request to get
+        radii = stm.get_radii()
+        response = algocomm_pb2.RadiiResponse(radii=radii)
+
+        print(f"[Algo sent a get radii request to the Stm]: List of radii: {radii}")
         return response
 
     def MoveVirtual(self, request, context):
         robot_coordinates = request.robotCoordinates
+        string_data.robot_coord = robot_coordinates
 
-    # def GetPicture(self, request, context):
-    #    response = algocomm_pb2.PicArray()
-    #    picture = multicomms.Multicomms().take_picture()
-    #    response.image.extend(picture) 
-    #    return response
+        print(f"[Algo sent robot coordinates to Android]: Robot coordinates: {robot_coordinates}")
+        return
+    
+    def TakePicture(self, request, context):
+        image.process_pic()
 
+        print("[Algo sent a take picture request to Image]")
+        return
+        
 
 class Algo_Server:
     def __init__(self):
         self.algo_server = Listener()
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-        algocomm_pb2_grpc.add_algoServicer_to_server(Listener(), self.server)
+        algocomm_pb2_grpc.add_algoServicer_to_server(self.algo_server, self.server)
         self.server.add_insecure_port('0.0.0.0:9999')
 
     def connect(self):
