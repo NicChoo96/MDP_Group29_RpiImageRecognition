@@ -138,19 +138,28 @@ class Multicomms:
         except Exception as error:
             print('Error while taking picture: ' + str(error))
         
-        print(image)    
+        # converts the image into a 1D array   
         array = image.reshape(-1)
         #print(array)
         return array
 
     def process_pic(self):
-        channel = grpc.insecure_channel('192.168.1.80:10009')
-        stub = imagecomm_pb2_grpc.ImageCommStub(channel)
-        empty = imagecomm_pb2.Empty()
-        picture = self.take_picture()
-        request = imagecomm_pb2.PicArray()
-        request.image.extend(picture)
-        result = stub.ProcessImage(empty)
-        print("Image processing...")
-        print(result)
-
+        try:
+            channel = grpc.insecure_channel('192.168.1.80:12345')
+            stub = imagecomm_pb2_grpc.ImageCommStub(channel)
+            
+            # take picture and convert it to 1D
+            picture = self.take_picture()
+        
+            # update image on server
+            request = imagecomm_pb2.PicArray()
+            request.image.extend(picture)
+            
+            # result of the image recognition model
+            print("Image processing...")
+            result = stub.ProcessImage(request)
+            
+            print(result)
+            
+        except Exception as error:
+            print("Error when processing picture: " + str(error))
