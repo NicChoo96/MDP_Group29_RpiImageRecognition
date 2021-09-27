@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18src/comms/algocomm.proto\x12\x04\x61lgo\"\x07\n\x05\x45mpty\"#\n\x0eObstacleString\x12\x11\n\tobstacles\x18\x01 \x01(\t\")\n\rRobotPosition\x12\x18\n\x10robotCoordinates\x18\x01 \x01(\t\"7\n\x0bMoveRequest\x12\x16\n\x0eradius_indexed\x18\x01 \x01(\x05\x12\x10\n\x08\x64istance\x18\x02 \x01(\x01\"%\n\x0cMoveResponse\x12\x15\n\rtime_required\x18\x01 \x01(\x01\"\x1e\n\rRadiiResponse\x12\r\n\x05radii\x18\x01 \x03(\x01\"\x19\n\x08PicArray\x12\r\n\x05image\x18\x01 \x03(\x05\x32\xfe\x01\n\x04\x61lgo\x12\x39\n\x12ReceiveCoordinates\x12\x0b.algo.Empty\x1a\x14.algo.ObstacleString\"\x00\x12-\n\x04Move\x12\x11.algo.MoveRequest\x1a\x12.algo.MoveResponse\x12,\n\x08GetRadii\x12\x0b.algo.Empty\x1a\x13.algo.RadiiResponse\x12\x31\n\x0bMoveVirtual\x12\x13.algo.RobotPosition\x1a\x0b.algo.Empty\"\x00\x12+\n\nGetPicture\x12\x0b.algo.Empty\x1a\x0e.algo.PicArray\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x18src/comms/algocomm.proto\x12\x04\x61lgo\"\x07\n\x05\x45mpty\"#\n\x0eObstacleString\x12\x11\n\tobstacles\x18\x01 \x01(\t\")\n\rRobotPosition\x12\x18\n\x10robotCoordinates\x18\x01 \x01(\t\"7\n\x0bMoveRequest\x12\x16\n\x0eradius_indexed\x18\x01 \x01(\x05\x12\x10\n\x08\x64istance\x18\x02 \x01(\x01\"%\n\x0cMoveResponse\x12\x15\n\rtime_required\x18\x01 \x01(\x01\"\x1e\n\rRadiiResponse\x12\r\n\x05radii\x18\x01 \x03(\x01\x32\xfc\x01\n\x04\x61lgo\x12\x39\n\x12ReceiveCoordinates\x12\x0b.algo.Empty\x1a\x14.algo.ObstacleString\"\x00\x12-\n\x04Move\x12\x11.algo.MoveRequest\x1a\x12.algo.MoveResponse\x12,\n\x08GetRadii\x12\x0b.algo.Empty\x1a\x13.algo.RadiiResponse\x12\x31\n\x0bMoveVirtual\x12\x13.algo.RobotPosition\x1a\x0b.algo.Empty\"\x00\x12)\n\x0bTakePicture\x12\x0b.algo.Empty\x1a\x0b.algo.Empty\"\x00\x62\x06proto3'
 )
 
 
@@ -216,45 +216,12 @@ _RADIIRESPONSE = _descriptor.Descriptor(
   serialized_end=249,
 )
 
-
-_PICARRAY = _descriptor.Descriptor(
-  name='PicArray',
-  full_name='algo.PicArray',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='image', full_name='algo.PicArray.image', index=0,
-      number=1, type=5, cpp_type=1, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=251,
-  serialized_end=276,
-)
-
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
 DESCRIPTOR.message_types_by_name['ObstacleString'] = _OBSTACLESTRING
 DESCRIPTOR.message_types_by_name['RobotPosition'] = _ROBOTPOSITION
 DESCRIPTOR.message_types_by_name['MoveRequest'] = _MOVEREQUEST
 DESCRIPTOR.message_types_by_name['MoveResponse'] = _MOVERESPONSE
 DESCRIPTOR.message_types_by_name['RadiiResponse'] = _RADIIRESPONSE
-DESCRIPTOR.message_types_by_name['PicArray'] = _PICARRAY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
@@ -299,13 +266,6 @@ RadiiResponse = _reflection.GeneratedProtocolMessageType('RadiiResponse', (_mess
   })
 _sym_db.RegisterMessage(RadiiResponse)
 
-PicArray = _reflection.GeneratedProtocolMessageType('PicArray', (_message.Message,), {
-  'DESCRIPTOR' : _PICARRAY,
-  '__module__' : 'src.comms.algocomm_pb2'
-  # @@protoc_insertion_point(class_scope:algo.PicArray)
-  })
-_sym_db.RegisterMessage(PicArray)
-
 
 
 _ALGO = _descriptor.ServiceDescriptor(
@@ -315,8 +275,8 @@ _ALGO = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=279,
-  serialized_end=533,
+  serialized_start=252,
+  serialized_end=504,
   methods=[
   _descriptor.MethodDescriptor(
     name='ReceiveCoordinates',
@@ -359,12 +319,12 @@ _ALGO = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='GetPicture',
-    full_name='algo.algo.GetPicture',
+    name='TakePicture',
+    full_name='algo.algo.TakePicture',
     index=4,
     containing_service=None,
     input_type=_EMPTY,
-    output_type=_PICARRAY,
+    output_type=_EMPTY,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

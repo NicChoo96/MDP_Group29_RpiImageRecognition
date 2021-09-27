@@ -37,10 +37,10 @@ class algoStub(object):
                 request_serializer=src_dot_comms_dot_algocomm__pb2.RobotPosition.SerializeToString,
                 response_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
                 )
-        self.GetPicture = channel.unary_unary(
-                '/algo.algo/GetPicture',
+        self.TakePicture = channel.unary_unary(
+                '/algo.algo/TakePicture',
                 request_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
-                response_deserializer=src_dot_comms_dot_algocomm__pb2.PicArray.FromString,
+                response_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
                 )
 
 
@@ -78,8 +78,8 @@ class algoServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetPicture(self, request, context):
-        """Client receives image from server
+    def TakePicture(self, request, context):
+        """Client sends a request to take picture
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -108,10 +108,10 @@ def add_algoServicer_to_server(servicer, server):
                     request_deserializer=src_dot_comms_dot_algocomm__pb2.RobotPosition.FromString,
                     response_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
             ),
-            'GetPicture': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetPicture,
+            'TakePicture': grpc.unary_unary_rpc_method_handler(
+                    servicer.TakePicture,
                     request_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
-                    response_serializer=src_dot_comms_dot_algocomm__pb2.PicArray.SerializeToString,
+                    response_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -195,7 +195,7 @@ class algo(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetPicture(request,
+    def TakePicture(request,
             target,
             options=(),
             channel_credentials=None,
@@ -205,8 +205,8 @@ class algo(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/algo.algo/GetPicture',
+        return grpc.experimental.unary_unary(request, target, '/algo.algo/TakePicture',
             src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
-            src_dot_comms_dot_algocomm__pb2.PicArray.FromString,
+            src_dot_comms_dot_algocomm__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
