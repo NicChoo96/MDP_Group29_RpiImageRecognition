@@ -16,11 +16,10 @@ from src.comms import string_data
 class Listener(algocomm_pb2_grpc.algoServicer):
 
     def __init__(self):
-        self.stm = stm_client.Stm_Client()
-        self.image = image_client.Image_Client()
+        #self.stm = stm_client.Stm_Client()
+        #self.img = image_client.Image_Client()
+        pass
 
-    
-        
     def ReceiveCoordinates(self, request, context):
         response = algocomm_pb2.ObstacleString()
         # Get obstacles string
@@ -42,7 +41,7 @@ class Listener(algocomm_pb2_grpc.algoServicer):
         radius_index = request.radius_indexed
         distance = request.distance
         # send a move_request to the stm server, returns the time required for the move
-        time_required = stm.move_request(radius_index, distance)
+        time_required = stm_client.Stm_Client().move_request(radius_index, distance)
         response = algocomm_pb2.MoveResponse(time_required = time_required)
 
         print(f"[Algo sent a move request to the Stm]: Radius_index: {radius_index}, Distance: {distance}, Time required: {time_required}")
@@ -52,7 +51,7 @@ class Listener(algocomm_pb2_grpc.algoServicer):
     # get a list of available turn radii.
     def GetRadii(self, request, context):
         # send a request to get
-        radii = stm.get_radii()
+        radii = stm_client.Stm_Client().get_radii()
         response = algocomm_pb2.RadiiResponse(radii=radii)
 
         print(f"[Algo sent a get radii request to the Stm]: List of radii: {radii}")
@@ -66,10 +65,9 @@ class Listener(algocomm_pb2_grpc.algoServicer):
         return
     
     def TakePicture(self, request, context):
-        image.process_pic()
-
+        image_client.Image_Client().process_pic()
         print("[Algo sent a take picture request to Image]")
-        return
+        return algocomm_pb2.Empty()
         
 
 class Algo_Server:

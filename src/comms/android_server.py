@@ -41,7 +41,6 @@ class Android_Server:
             if not connected:
                 break
 
-            print("Attempting to retry connection with Android")
 
     def disconnect(self):
         try:
@@ -74,9 +73,16 @@ class Android_Server:
     def read(self):
         try:
             data = self.client_sock.recv(1024).strip()
-            if len(data) == 0: return None
-            print("From android: [%s]" % data)
-            return data
+            
+            if data is None:
+                return None
+
+            if len(data) > 0:
+                print("From android: [%s]" % data)
+                return data
+            
+            return None
+        
 
         except Exception as error:
             print("Android read failed: " + str(error))

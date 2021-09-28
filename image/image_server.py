@@ -44,7 +44,7 @@ class Image_Server:
             self.disconnect()
 
     def disconnect(self):
-        print("Disconnecting Algo server")
+        print("Disconnecting Image server")
         self.server.stop(0)
         
     def store_image(self,imageArr):

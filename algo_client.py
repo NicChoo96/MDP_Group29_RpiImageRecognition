@@ -6,28 +6,12 @@ from PIL import Image
 from src.comms import algocomm_pb2
 from src.comms import algocomm_pb2_grpc
 
+# FOR TESTING
 # Delon's home
 #channel = grpc.insecure_channel('192.168.50.37:9999')
 # in school
-channel = grpc.insecure_channel('127.0.0.1:9999')
+channel = grpc.insecure_channel('192.168.1.218:9999')
 stub = algocomm_pb2_grpc.algoStub(channel)
 empty = algocomm_pb2.Empty()
 
-android_string = stub.ReceiveCoordinates(empty)
-print(android_string.obstacles)
-
-#image = stub.GetPicture(empty)
-#array = []
-#array.append(image.image)
-#a = np.array(array)
-#newarr = a.reshape(480,640,3)
-# reshape and form as an image?
-#print(newarr.shape)
-#print(type(newarr))
-#print(newarr)
-
-#cv2.imwrite('image.png',newarr)
-#im = cv2.imread('image.png')
-#cv2.imshow('Test', im)
-#cv2.waitKey(0)
-#cv2.destroyAllWindows()
+test = stub.TakePicture(empty)

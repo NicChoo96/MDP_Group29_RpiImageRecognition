@@ -8,8 +8,17 @@ from picamera import PiCamera
 from picamera.array import PiRGBArray
 
 class Image_Client:
+
+    def __init__(self):
+        self.img_ip = '192.168.1.218'
+        self.img_port = '12345'
+        # open a gRPC channel
+        self.channel = grpc.insecure_channel('{}:{}'.format(self.img_ip, self.img_port))
+        # create a stub (client)
+        self.stub = imagecomm_pb2_grpc.ImageCommStub(self.channel)
+
     
-    def take_picture():
+    def take_picture(self):
         try:
             camera = PiCamera(resolution = '640x480')
             # 3D RGB numpy array (row, col, colour)
@@ -32,13 +41,13 @@ class Image_Client:
         #print(array)
         return array
 
-    def process_pic():
+    def process_pic(self):
         try:
-            channel = grpc.insecure_channel('192.168.29.202:50051')
-            stub = imagecomm_pb2_grpc.ImageCommStub(channel)
+            #channel = grpc.insecure_channel('192.168.1.218:12345')
+            #stub = imagecomm_pb2_grpc.ImageCommStub(channel)
             
             # take picture and convert it to 1D
-            picture = take_picture()
+            picture = self.take_picture()
         
             # update image on server
             request = imagecomm_pb2.PicArray()
@@ -46,7 +55,7 @@ class Image_Client:
             
             # result of the image recognition model
             print("Image processing...")
-            result = stub.ProcessImage(request)
+            result = self.stub.ProcessImage(request)
             
             print(result)
             

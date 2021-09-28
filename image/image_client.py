@@ -30,7 +30,7 @@ def take_picture():
 
 def process_pic():
     try:
-        channel = grpc.insecure_channel('192.168.29.202:50051')
+        channel = grpc.insecure_channel('192.168.1.218:12345')
         stub = imagecomm_pb2_grpc.ImageCommStub(channel)
             
         # take picture and convert it to 1D
