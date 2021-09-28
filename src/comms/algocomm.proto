@@ -21,10 +21,20 @@ service algo {
   // Client sends a request to take picture
   rpc TakePicture(Empty) returns (Empty) {}
 
+  // Client updates the current status
   rpc UpdateStatus(StatusString) returns (Empty) {}
+
+  // Check if the Android has sent the start command
+  rpc CheckStart(Empty) returns (StartResponse);
+  
 }
 
 message Empty {
+}
+
+// True/False 
+message StartResponse {
+  bool start = 1;
 }
 
 // Status string 

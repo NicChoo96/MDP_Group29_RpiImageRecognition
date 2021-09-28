@@ -34,6 +34,22 @@ class Listener(algocomm_pb2_grpc.algoServicer):
             
         return response
 
+    def MoveVirtual(self, request, context):
+        robot_coordinates = request.robotCoordinates
+        string_data.robot_coord = robot_coordinates
+
+        print(f"[Algo sent robot coordinates to Android]: Robot coordinates: {robot_coordinates}")
+        
+        return algocomm_pb2.Empty()
+
+    def UpdateStatus(self, request, context):
+        status_string = request.status
+        string_data.status = status_string
+        
+        print(f"[Algo sent a status update to Android]: Robot coordinates: {status_string}")
+
+        return algocomm_pb2.Empty()
+
     # commands the robot to move with a given radius index and distance
     # returns the estimated time required for move
     def Move(self, request, context):
@@ -56,14 +72,6 @@ class Listener(algocomm_pb2_grpc.algoServicer):
 
         print(f"[Algo sent a get radii request to the Stm]: List of radii: {radii}")
         return response
-
-    def MoveVirtual(self, request, context):
-        robot_coordinates = request.robotCoordinates
-        string_data.robot_coord = robot_coordinates
-
-        print(f"[Algo sent robot coordinates to Android]: Robot coordinates: {robot_coordinates}")
-        
-        return algocomm_pb2.Empty()
     
     def TakePicture(self, request, context):
         image_client.Image_Client().process_pic()
