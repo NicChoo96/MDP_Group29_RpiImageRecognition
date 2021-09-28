@@ -10,7 +10,7 @@ message Empty {
 }
 
 message PicArray {
-  repeated int32 image = 1;
+  bytes image = 1;
 }
 
 message ProcessResult {

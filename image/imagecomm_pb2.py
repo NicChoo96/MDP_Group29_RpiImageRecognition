@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x15image/imagecomm.proto\x12\timagecomm\"\x07\n\x05\x45mpty\"\x19\n\x08PicArray\x12\r\n\x05image\x18\x01 \x03(\x05\"\x1f\n\rProcessResult\x12\x0e\n\x06result\x18\x01 \x01(\x05\x32L\n\tImageComm\x12?\n\x0cProcessImage\x12\x13.imagecomm.PicArray\x1a\x18.imagecomm.ProcessResult\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x15image/imagecomm.proto\x12\timagecomm\"\x07\n\x05\x45mpty\"\x19\n\x08PicArray\x12\r\n\x05image\x18\x01 \x01(\x0c\"\x1f\n\rProcessResult\x12\x0e\n\x06result\x18\x01 \x01(\x05\x32L\n\tImageComm\x12?\n\x0cProcessImage\x12\x13.imagecomm.PicArray\x1a\x18.imagecomm.ProcessResult\"\x00\x62\x06proto3'
 )
 
 
@@ -60,8 +60,8 @@ _PICARRAY = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='image', full_name='imagecomm.PicArray.image', index=0,
-      number=1, type=5, cpp_type=1, label=3,
-      has_default_value=False, default_value=[],
+      number=1, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
