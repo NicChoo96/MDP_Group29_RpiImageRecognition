@@ -10,7 +10,7 @@ from picamera.array import PiRGBArray
 class Image_Client:
 
     def __init__(self):
-        self.img_ip = '192.168.1.218'
+        self.img_ip = '127.0.0.1'
         self.img_port = '12345'
         # open a gRPC channel
         self.channel = grpc.insecure_channel('{}:{}'.format(self.img_ip, self.img_port))

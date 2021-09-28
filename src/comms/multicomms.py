@@ -27,7 +27,7 @@ class Multicomms:
 
         self.algo = algo_server.Algo_Server()
         self.android = android_server.Android_Server()
-        self.stm = stm_client.Stm_Client()
+        #self.stm = stm_client.Stm_Client()
         
         string_data.init()
 
@@ -42,11 +42,12 @@ class Multicomms:
             #self.stm.ping_request()
             t1 = threading.Thread(target=self.algo.connect)
             t2 = threading.Thread(target=self.android.connect)
-            #t3 = threading.Thread(target=self.read_android)
+            t3 = threading.Thread(target=self.write_android)
             
             t1.start()
             t2.start()
-            time.sleep(15)
+            t3.start()
+            t3.join()
             t2.join()
             t1.join()
             print("end")
@@ -73,11 +74,10 @@ class Multicomms:
     
     def write_android(self):
         while True:
-            # check if robot_coord != 'No value'
-            # TODO:
-            time.sleep(20)
-            self.android.write(message)
-    
+            if string_data.robot_coord != 'No value':
+                self.android.write(string_data.robot_coord)
+                string_data.robot_coord = 'No value'
+            time.sleep(2)   
 
     def take_picture(self):
         try:

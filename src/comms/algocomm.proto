@@ -10,19 +10,26 @@ service algo {
   rpc ReceiveCoordinates(Empty) returns (ObstacleString) {}
 
   // Commands the robot to move.
-  rpc Move (MoveRequest) returns (MoveResponse);
+  rpc Move(MoveRequest) returns (MoveResponse);
 
   // Obtain a list of available turn radii.
-  rpc GetRadii (Empty) returns (RadiiResponse);
+  rpc GetRadii(Empty) returns (RadiiResponse);
 
   // Client (algo) sends the coordinates of the robot to the server (rPi).
   rpc MoveVirtual(RobotPosition) returns (Empty) {}
 
   // Client sends a request to take picture
-  rpc TakePicture (Empty) returns (Empty) {}
+  rpc TakePicture(Empty) returns (Empty) {}
+
+  rpc UpdateStatus(StatusString) returns (Empty) {}
 }
 
 message Empty {
+}
+
+// Status string 
+message StatusString {
+  string status = 1;
 }
 
 // Obstacle string ("OBS:X:Y:Dir:X:Y:Dir:...") to be received from rPi.

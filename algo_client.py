@@ -10,8 +10,19 @@ from src.comms import algocomm_pb2_grpc
 # Delon's home
 #channel = grpc.insecure_channel('192.168.50.37:9999')
 # in school
-channel = grpc.insecure_channel('192.168.1.218:9999')
+channel = grpc.insecure_channel('127.0.0.1:9999')
 stub = algocomm_pb2_grpc.algoStub(channel)
 empty = algocomm_pb2.Empty()
 
-test = stub.TakePicture(empty)
+# move request test
+#request = algocomm_pb2.MoveRequest(radius_indexed=0, distance=0.3)
+#test = stub.Move(request)
+
+# get radii test
+# rpc GetRadii (Empty) returns (RadiiResponse);
+# test = stub.GetRadii(empty)
+
+test_string = 'RP:1:3:N'
+request = algocomm_pb2.RobotPosition(robotCoordinates=test_string)
+stub.MoveVirtual(request)
+print("Algo Client End")

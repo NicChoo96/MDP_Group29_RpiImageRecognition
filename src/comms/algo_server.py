@@ -42,7 +42,7 @@ class Listener(algocomm_pb2_grpc.algoServicer):
         distance = request.distance
         # send a move_request to the stm server, returns the time required for the move
         time_required = stm_client.Stm_Client().move_request(radius_index, distance)
-        response = algocomm_pb2.MoveResponse(time_required = time_required)
+        response = algocomm_pb2.MoveResponse(time_required=(time_required.seconds-1e-9))
 
         print(f"[Algo sent a move request to the Stm]: Radius_index: {radius_index}, Distance: {distance}, Time required: {time_required}")
         return response
@@ -62,7 +62,8 @@ class Listener(algocomm_pb2_grpc.algoServicer):
         string_data.robot_coord = robot_coordinates
 
         print(f"[Algo sent robot coordinates to Android]: Robot coordinates: {robot_coordinates}")
-        return
+        
+        return algocomm_pb2.Empty()
     
     def TakePicture(self, request, context):
         image_client.Image_Client().process_pic()

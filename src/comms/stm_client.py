@@ -10,7 +10,7 @@ class Stm_Client:
 
     def __init__(self):
         #self.stm_ip = '192.168.50.37'
-        self.stm_ip = '192.168.29.29'
+        self.stm_ip = '127.0.0.1'
         self.stm_port = '10002'
         # open a gRPC channel
         self.channel = grpc.insecure_channel('{}:{}'.format(self.stm_ip, self.stm_port))
