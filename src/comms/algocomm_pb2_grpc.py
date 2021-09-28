@@ -47,6 +47,11 @@ class algoStub(object):
                 request_serializer=src_dot_comms_dot_algocomm__pb2.StatusString.SerializeToString,
                 response_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
                 )
+        self.CheckStart = channel.unary_unary(
+                '/algo.algo/CheckStart',
+                request_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+                response_deserializer=src_dot_comms_dot_algocomm__pb2.StartResponse.FromString,
+                )
 
 
 class algoServicer(object):
@@ -91,7 +96,15 @@ class algoServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def UpdateStatus(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Client updates the current status
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CheckStart(self, request, context):
+        """Check if the Android has sent the start command
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -128,6 +141,11 @@ def add_algoServicer_to_server(servicer, server):
                     servicer.UpdateStatus,
                     request_deserializer=src_dot_comms_dot_algocomm__pb2.StatusString.FromString,
                     response_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+            ),
+            'CheckStart': grpc.unary_unary_rpc_method_handler(
+                    servicer.CheckStart,
+                    request_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
+                    response_serializer=src_dot_comms_dot_algocomm__pb2.StartResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -241,5 +259,22 @@ class algo(object):
         return grpc.experimental.unary_unary(request, target, '/algo.algo/UpdateStatus',
             src_dot_comms_dot_algocomm__pb2.StatusString.SerializeToString,
             src_dot_comms_dot_algocomm__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CheckStart(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/algo.algo/CheckStart',
+            src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+            src_dot_comms_dot_algocomm__pb2.StartResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
