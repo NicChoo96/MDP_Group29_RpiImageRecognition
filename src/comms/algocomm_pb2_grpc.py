@@ -42,6 +42,11 @@ class algoStub(object):
                 request_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
                 response_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
                 )
+        self.UpdateStatus = channel.unary_unary(
+                '/algo.algo/UpdateStatus',
+                request_serializer=src_dot_comms_dot_algocomm__pb2.StatusString.SerializeToString,
+                response_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
+                )
 
 
 class algoServicer(object):
@@ -85,6 +90,12 @@ class algoServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def UpdateStatus(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_algoServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -111,6 +122,11 @@ def add_algoServicer_to_server(servicer, server):
             'TakePicture': grpc.unary_unary_rpc_method_handler(
                     servicer.TakePicture,
                     request_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
+                    response_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+            ),
+            'UpdateStatus': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateStatus,
+                    request_deserializer=src_dot_comms_dot_algocomm__pb2.StatusString.FromString,
                     response_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
             ),
     }
@@ -207,6 +223,23 @@ class algo(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/algo.algo/TakePicture',
             src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+            src_dot_comms_dot_algocomm__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdateStatus(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/algo.algo/UpdateStatus',
+            src_dot_comms_dot_algocomm__pb2.StatusString.SerializeToString,
             src_dot_comms_dot_algocomm__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
