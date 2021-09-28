@@ -73,10 +73,19 @@ class Multicomms:
                 
     
     def write_android(self):
+        curr_robot_coord = "No value"
+        curr_status = "No value"
+
         while True:
-            if string_data.robot_coord != 'No value':
+            if string_data.robot_coord != curr_robot_coord:
+                # lock this thread here?
                 self.android.write(string_data.robot_coord)
-                string_data.robot_coord = 'No value'
+                curr_robot_coord = string_data.robot_coord
+                # unlock
+            
+            if string_data.curr_status != curr_status:
+                self
+            
             time.sleep(2)   
 
     def take_picture(self):
