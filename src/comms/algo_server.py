@@ -20,6 +20,14 @@ class Listener(algocomm_pb2_grpc.algoServicer):
         #self.img = image_client.Image_Client()
         pass
 
+    def CheckStart(self, request, context):
+        response = algocomm_pb2.StartResponse()
+        start = string_data.start
+        response.start = start
+        print(str(start))
+        print("[Sending start status to algo...] Start status:" + str(start)) 
+        return response
+
     def ReceiveCoordinates(self, request, context):
         response = algocomm_pb2.ObstacleString()
         # Get obstacles string
@@ -27,11 +35,9 @@ class Listener(algocomm_pb2_grpc.algoServicer):
         
         obs_string = string_data.obs_value
         
-        print(f"[Sending obstaacle string to algo...]: {obs_string}")
+        print(f"[Sending obstacle string to algo...]: {obs_string}")
         
-        if m != "No value":
-            response.obstacles = m
-            
+        response.obstacles = obs_string
         return response
 
     def MoveVirtual(self, request, context):

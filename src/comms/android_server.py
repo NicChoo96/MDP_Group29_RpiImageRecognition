@@ -72,6 +72,9 @@ class Android_Server:
 
     def read(self):
         try:
+            if self.client_sock is None:
+                return None 
+                
             data = self.client_sock.recv(1024).strip()
             
             if data is None:

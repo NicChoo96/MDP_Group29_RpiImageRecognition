@@ -22,7 +22,21 @@ empty = algocomm_pb2.Empty()
 # rpc GetRadii (Empty) returns (RadiiResponse);
 # test = stub.GetRadii(empty)
 
-test_string = 'RP:1:3:N'
-request = algocomm_pb2.RobotPosition(robotCoordinates=test_string)
-stub.MoveVirtual(request)
+# test_string = 'RP:1:3:N'
+# request = algocomm_pb2.RobotPosition(robotCoordinates=test_string)
+# stub.MoveVirtual(request)
+
+start = False
+
+while True:
+    
+    request = stub.CheckStart(empty)
+    start = request.start
+    
+    if start:
+        request = stub.ReceiveCoordinates(empty)
+        obs_string = request.obstacles
+        print(obs_string)
+    
+
 print("Algo Client End")

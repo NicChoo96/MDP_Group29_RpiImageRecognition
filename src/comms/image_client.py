@@ -26,8 +26,8 @@ class Image_Client:
             
             # camera warm up time
             time.sleep(2)
-            # OpenCV takes bgr
-            camera.capture(picArray, format='bgr', resize = '640x480')
+            # OpenCV takes bgr, resize = '640x480'
+            camera.capture(picArray, format='bgr')
             image = picArray.array
             camera.close()
             

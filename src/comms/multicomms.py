@@ -43,10 +43,13 @@ class Multicomms:
             t1 = threading.Thread(target=self.algo.connect)
             t2 = threading.Thread(target=self.android.connect)
             t3 = threading.Thread(target=self.write_android)
+            t4 = threading.Thread(target=self.read_android)
             
             t1.start()
             t2.start()
             t3.start()
+            t4.start()
+            t4.join()
             t3.join()
             t2.join()
             t1.join()
@@ -60,14 +63,21 @@ class Multicomms:
         while True:
             try:
                 android_string = self.android.read()
-                android_string = android_string.decode("utf-8")
-                print(f"[Decoded string is...] : {android_string}]")
                 
                 if android_string is None:
                     continue
-                # TODO: Check if android_string is obs
+
+                android_string = android_string.decode("utf-8")
+                print(f"[Decoded string is...] : {android_string}]")
+                
+                # check if start is issued 
+                if android_string == 'START':
+                    string_data.start = True
+                    continue
+                
+                # update obs_value only if its different
                 string_data.obs_value = android_string
-            
+                
             except Exception as error:
                 print(str(error))
                 
@@ -83,9 +93,9 @@ class Multicomms:
                 curr_robot_coord = string_data.robot_coord
                 # unlock
             
-            if string_data.curr_status != curr_status:
-                self
-            
+            if string_data.status != curr_status:
+                pass
+
             time.sleep(2)   
 
     def take_picture(self):
