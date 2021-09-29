@@ -3,6 +3,7 @@ import grpc
 
 from src.comms import imagecomm_pb2
 from src.comms import imagecomm_pb2_grpc
+from src.comms import camera_setup
 
 from picamera import PiCamera
 from picamera.array import PiRGBArray
@@ -20,16 +21,18 @@ class Image_Client:
     
     def take_picture(self):
         try:
-            camera = PiCamera(resolution = '640x480')
+            # camera = PiCamera(resolution = '640x480')
             # 3D RGB numpy array (row, col, colour)
-            picArray = PiRGBArray(camera)
             
             # camera warm up time
-            time.sleep(2)
+            # time.sleep(2)
             # OpenCV takes bgr, resize = '640x480'
+
+            camera = camera_setup.camera
+            picArray = PiRGBArray(camera)
             camera.capture(picArray, format='bgr')
             image = picArray.array
-            camera.close()
+            # camera.close()
             
             print('Image taken successfully')
 
@@ -52,15 +55,19 @@ class Image_Client:
             # update image on server
             request = imagecomm_pb2.PicArray()
             request.image.extend(picture)
-            
             # result of the image recognition model
             print("Image processing...")
             result = self.stub.ProcessImage(request)
+            print("done result")
             
-            print(result)
+            # print(result)
             
         except Exception as error:
             print("Error when processing picture: " + str(error))
+
+    def stop_server(self):
+        self.stub.StopServer()
+        print("Stopping the image server")
         
 
 if __name__ == "__main__":

@@ -7,15 +7,17 @@ import time
 
 def take_picture():
     try:
-        camera = PiCamera(resolution = '640x480')
+        camera = PiCamera()
+        camera.resolution = (640,480)
         # 3D RGB numpy array (row, col, colour)
         picArray = PiRGBArray(camera)
             
         # camera warm up time
-        time.sleep(2)
+        time.sleep(0.1)
         # OpenCV takes bgr
-        camera.capture(picArray, format='bgr')
-        image = picArray.array
+        camera.capture(picArray,format='jpeg')
+        #image = picArray.array
+        #print(image)
         camera.close()
 
         print('Image taken successfully')
@@ -24,9 +26,9 @@ def take_picture():
         print('Error while taking picture: ' + str(error))
         
     # converts the image into a 1D array   
-    array = image.reshape(-1)
+    # array = image.reshape(-1)
     #print(array)
-    return array
+    return picArray
 
 def process_pic():
     try:
@@ -38,7 +40,8 @@ def process_pic():
         
         # update image on server
         request = imagecomm_pb2.PicArray()
-        request.image.extend(picture)
+        #request.image.extend(picture)
+        request.image = picture
             
         # result of the image recognition model
         print("Image processing...")

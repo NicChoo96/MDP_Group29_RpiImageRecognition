@@ -12,6 +12,9 @@ from src.comms import algo_server
 from src.comms import android_server
 from src.comms import stm_client
 from src.comms import string_data
+from src.comms import camera_setup
+
+from src.comms import image_client
 
 from src.comms import imagecomm_pb2
 from src.comms import imagecomm_pb2_grpc
@@ -30,6 +33,7 @@ class Multicomms:
         #self.stm = stm_client.Stm_Client()
         
         string_data.init()
+        camera_setup.init()
 
     def start(self):
         try:
@@ -44,11 +48,17 @@ class Multicomms:
             t2 = threading.Thread(target=self.android.connect)
             t3 = threading.Thread(target=self.write_android)
             t4 = threading.Thread(target=self.read_android)
+
+            t5 = threading.Thread(target=image_client.Image_Client().process_pic)
             
             t1.start()
             t2.start()
             t3.start()
             t4.start()
+            time.sleep(15)
+            print("Starting process")
+            t5.start()
+            t5.join()
             t4.join()
             t3.join()
             t2.join()

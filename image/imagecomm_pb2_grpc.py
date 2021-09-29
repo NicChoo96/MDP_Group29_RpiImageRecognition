@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from image import imagecomm_pb2 as image_dot_imagecomm__pb2
+import imagecomm_pb2 as image_dot_imagecomm__pb2
 
 
 class ImageCommStub(object):
@@ -19,12 +19,23 @@ class ImageCommStub(object):
                 request_serializer=image_dot_imagecomm__pb2.PicArray.SerializeToString,
                 response_deserializer=image_dot_imagecomm__pb2.ProcessResult.FromString,
                 )
+        self.StopServer = channel.unary_unary(
+                '/imagecomm.ImageComm/StopServer',
+                request_serializer=image_dot_imagecomm__pb2.Empty.SerializeToString,
+                response_deserializer=image_dot_imagecomm__pb2.Empty.FromString,
+                )
 
 
 class ImageCommServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def ProcessImage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def StopServer(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -37,6 +48,11 @@ def add_ImageCommServicer_to_server(servicer, server):
                     servicer.ProcessImage,
                     request_deserializer=image_dot_imagecomm__pb2.PicArray.FromString,
                     response_serializer=image_dot_imagecomm__pb2.ProcessResult.SerializeToString,
+            ),
+            'StopServer': grpc.unary_unary_rpc_method_handler(
+                    servicer.StopServer,
+                    request_deserializer=image_dot_imagecomm__pb2.Empty.FromString,
+                    response_serializer=image_dot_imagecomm__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -62,5 +78,22 @@ class ImageComm(object):
         return grpc.experimental.unary_unary(request, target, '/imagecomm.ImageComm/ProcessImage',
             image_dot_imagecomm__pb2.PicArray.SerializeToString,
             image_dot_imagecomm__pb2.ProcessResult.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def StopServer(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/imagecomm.ImageComm/StopServer',
+            image_dot_imagecomm__pb2.Empty.SerializeToString,
+            image_dot_imagecomm__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

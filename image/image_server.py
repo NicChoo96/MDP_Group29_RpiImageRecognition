@@ -3,7 +3,6 @@ import threading
 import numpy as np
 import cv2
 
-
 import imagecomm_pb2
 import imagecomm_pb2_grpc
 
@@ -15,7 +14,9 @@ class Listener(imagecomm_pb2_grpc.ImageCommServicer):
 
     def ProcessImage(self, request, context):
         # get the 1D array of the image
+        print("HERE")
         imageArr = request.image
+        print("HERE2")
         Image_Server().store_image(imageArr)
         #Image_Server().display_image()
         # pass into model and get result
@@ -50,9 +51,7 @@ class Image_Server:
     def store_image(self,imageArr):
         imageNp = np.array(imageArr).reshape(480,640,3)
         # reshape and form as an image?
-        print(imageNp)
         print(imageNp.shape)
-        print(type(imageNp))
         
         cv2.imwrite('image.png',imageNp)
         print("Image is stored")

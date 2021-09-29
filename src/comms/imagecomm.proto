@@ -4,6 +4,7 @@ package imagecomm;
 
 service ImageComm {
   rpc ProcessImage (PicArray) returns (ProcessResult) {}
+  rpc StopServer (Empty) returns (Empty) {}
 }
 
 message Empty {
