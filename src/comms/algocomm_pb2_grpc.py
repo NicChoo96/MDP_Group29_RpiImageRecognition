@@ -39,7 +39,7 @@ class algoStub(object):
                 )
         self.TakePicture = channel.unary_unary(
                 '/algo.algo/TakePicture',
-                request_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+                request_serializer=src_dot_comms_dot_algocomm__pb2.ImageID.SerializeToString,
                 response_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
                 )
         self.UpdateStatus = channel.unary_unary(
@@ -134,7 +134,7 @@ def add_algoServicer_to_server(servicer, server):
             ),
             'TakePicture': grpc.unary_unary_rpc_method_handler(
                     servicer.TakePicture,
-                    request_deserializer=src_dot_comms_dot_algocomm__pb2.Empty.FromString,
+                    request_deserializer=src_dot_comms_dot_algocomm__pb2.ImageID.FromString,
                     response_serializer=src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
             ),
             'UpdateStatus': grpc.unary_unary_rpc_method_handler(
@@ -240,7 +240,7 @@ class algo(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/algo.algo/TakePicture',
-            src_dot_comms_dot_algocomm__pb2.Empty.SerializeToString,
+            src_dot_comms_dot_algocomm__pb2.ImageID.SerializeToString,
             src_dot_comms_dot_algocomm__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x18src/comms/algocomm.proto\x12\x04\x61lgo\"\x07\n\x05\x45mpty\"\x1e\n\rStartResponse\x12\r\n\x05start\x18\x01 \x01(\x08\"\x1e\n\x0cStatusString\x12\x0e\n\x06status\x18\x01 \x01(\t\"#\n\x0eObstacleString\x12\x11\n\tobstacles\x18\x01 \x01(\t\")\n\rRobotPosition\x12\x18\n\x10robotCoordinates\x18\x01 \x01(\t\"7\n\x0bMoveRequest\x12\x16\n\x0eradius_indexed\x18\x01 \x01(\x05\x12\x10\n\x08\x64istance\x18\x02 \x01(\x01\"%\n\x0cMoveResponse\x12\x15\n\rtime_required\x18\x01 \x01(\x01\"\x1e\n\rRadiiResponse\x12\r\n\x05radii\x18\x01 \x03(\x01\x32\xe1\x02\n\x04\x61lgo\x12\x39\n\x12ReceiveCoordinates\x12\x0b.algo.Empty\x1a\x14.algo.ObstacleString\"\x00\x12-\n\x04Move\x12\x11.algo.MoveRequest\x1a\x12.algo.MoveResponse\x12,\n\x08GetRadii\x12\x0b.algo.Empty\x1a\x13.algo.RadiiResponse\x12\x31\n\x0bMoveVirtual\x12\x13.algo.RobotPosition\x1a\x0b.algo.Empty\"\x00\x12)\n\x0bTakePicture\x12\x0b.algo.Empty\x1a\x0b.algo.Empty\"\x00\x12\x31\n\x0cUpdateStatus\x12\x12.algo.StatusString\x1a\x0b.algo.Empty\"\x00\x12\x30\n\nCheckStart\x12\x0b.algo.Empty\x1a\x13.algo.StartResponse\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x18src/comms/algocomm.proto\x12\x04\x61lgo\"\x07\n\x05\x45mpty\"\x1e\n\rStartResponse\x12\r\n\x05start\x18\x01 \x01(\x08\"\x1e\n\x0cStatusString\x12\x0e\n\x06status\x18\x01 \x01(\t\"#\n\x0eObstacleString\x12\x11\n\tobstacles\x18\x01 \x01(\t\"\x15\n\x07ImageID\x12\n\n\x02id\x18\x01 \x01(\t\")\n\rRobotPosition\x12\x18\n\x10robotCoordinates\x18\x01 \x01(\t\"7\n\x0bMoveRequest\x12\x16\n\x0eradius_indexed\x18\x01 \x01(\x05\x12\x10\n\x08\x64istance\x18\x02 \x01(\x01\"%\n\x0cMoveResponse\x12\x15\n\rtime_required\x18\x01 \x01(\x01\"\x1e\n\rRadiiResponse\x12\r\n\x05radii\x18\x01 \x03(\x01\x32\xe3\x02\n\x04\x61lgo\x12\x39\n\x12ReceiveCoordinates\x12\x0b.algo.Empty\x1a\x14.algo.ObstacleString\"\x00\x12-\n\x04Move\x12\x11.algo.MoveRequest\x1a\x12.algo.MoveResponse\x12,\n\x08GetRadii\x12\x0b.algo.Empty\x1a\x13.algo.RadiiResponse\x12\x31\n\x0bMoveVirtual\x12\x13.algo.RobotPosition\x1a\x0b.algo.Empty\"\x00\x12+\n\x0bTakePicture\x12\r.algo.ImageID\x1a\x0b.algo.Empty\"\x00\x12\x31\n\x0cUpdateStatus\x12\x12.algo.StatusString\x1a\x0b.algo.Empty\"\x00\x12\x30\n\nCheckStart\x12\x0b.algo.Empty\x1a\x13.algo.StartResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -146,6 +146,38 @@ _OBSTACLESTRING = _descriptor.Descriptor(
 )
 
 
+_IMAGEID = _descriptor.Descriptor(
+  name='ImageID',
+  full_name='algo.ImageID',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='algo.ImageID.id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=144,
+  serialized_end=165,
+)
+
+
 _ROBOTPOSITION = _descriptor.Descriptor(
   name='RobotPosition',
   full_name='algo.RobotPosition',
@@ -173,8 +205,8 @@ _ROBOTPOSITION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=144,
-  serialized_end=185,
+  serialized_start=167,
+  serialized_end=208,
 )
 
 
@@ -212,8 +244,8 @@ _MOVEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=187,
-  serialized_end=242,
+  serialized_start=210,
+  serialized_end=265,
 )
 
 
@@ -244,8 +276,8 @@ _MOVERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=244,
-  serialized_end=281,
+  serialized_start=267,
+  serialized_end=304,
 )
 
 
@@ -276,14 +308,15 @@ _RADIIRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=283,
-  serialized_end=313,
+  serialized_start=306,
+  serialized_end=336,
 )
 
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
 DESCRIPTOR.message_types_by_name['StartResponse'] = _STARTRESPONSE
 DESCRIPTOR.message_types_by_name['StatusString'] = _STATUSSTRING
 DESCRIPTOR.message_types_by_name['ObstacleString'] = _OBSTACLESTRING
+DESCRIPTOR.message_types_by_name['ImageID'] = _IMAGEID
 DESCRIPTOR.message_types_by_name['RobotPosition'] = _ROBOTPOSITION
 DESCRIPTOR.message_types_by_name['MoveRequest'] = _MOVEREQUEST
 DESCRIPTOR.message_types_by_name['MoveResponse'] = _MOVERESPONSE
@@ -317,6 +350,13 @@ ObstacleString = _reflection.GeneratedProtocolMessageType('ObstacleString', (_me
   # @@protoc_insertion_point(class_scope:algo.ObstacleString)
   })
 _sym_db.RegisterMessage(ObstacleString)
+
+ImageID = _reflection.GeneratedProtocolMessageType('ImageID', (_message.Message,), {
+  'DESCRIPTOR' : _IMAGEID,
+  '__module__' : 'src.comms.algocomm_pb2'
+  # @@protoc_insertion_point(class_scope:algo.ImageID)
+  })
+_sym_db.RegisterMessage(ImageID)
 
 RobotPosition = _reflection.GeneratedProtocolMessageType('RobotPosition', (_message.Message,), {
   'DESCRIPTOR' : _ROBOTPOSITION,
@@ -355,8 +395,8 @@ _ALGO = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=316,
-  serialized_end=669,
+  serialized_start=339,
+  serialized_end=694,
   methods=[
   _descriptor.MethodDescriptor(
     name='ReceiveCoordinates',
@@ -403,7 +443,7 @@ _ALGO = _descriptor.ServiceDescriptor(
     full_name='algo.algo.TakePicture',
     index=4,
     containing_service=None,
-    input_type=_EMPTY,
+    input_type=_IMAGEID,
     output_type=_EMPTY,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,

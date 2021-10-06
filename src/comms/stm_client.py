@@ -45,9 +45,12 @@ class Stm_Client:
 
     def move_cancel(self):
         print("Sending a cancel move request")
-        # Not sure
-        hdcomm_pb2.MoveRequest(radius_index=0, distance=0)
-        self.stub.MoveCancel(empty)
+        try:
+            self.stub.MoveCancel()
+        
+        except Exception as error:
+            print("Move cancel failed")
+            print(str(error))
 
     def get_radii(self):
         try:

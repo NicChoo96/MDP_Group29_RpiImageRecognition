@@ -39,20 +39,8 @@ class Android_Server:
                 print("Connection failed: " + str(error))
 
             if not connected:
+                # reconnect here
                 break
-
-
-    def disconnect(self):
-        try:
-            # connected to a client socket
-            if self.client_sock is not None:
-                self.client_sock.close()
-                self.client_sock = None
-
-            print("Android disconnected Successfully")
-
-        except Exception as error:
-            print("Android disconnect failed: " + str(error))
 
     def clear_socket(self):
         try:
@@ -100,6 +88,16 @@ class Android_Server:
         except Exception as error:
             print("Android write failed: " + str(error))
             raise error
+
+    def disconnect(self):
+        try:
+            # connected to a client socket
+            self.clear_socket()
+
+            print("Android disconnected Successfully")
+
+        except Exception as error:
+            print("Android disconnect failed: " + str(error))
 
 
 if __name__ == '__main__':

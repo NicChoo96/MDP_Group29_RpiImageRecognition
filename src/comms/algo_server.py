@@ -24,8 +24,10 @@ class Listener(algocomm_pb2_grpc.algoServicer):
         response = algocomm_pb2.StartResponse()
         start = string_data.start
         response.start = start
-        print(str(start))
-        print("[Sending start status to algo...] Start status:" + str(start)) 
+
+        if start:
+            print("[Sending start status to algo...] Start status:" + str(start)) 
+        
         return response
 
     def ReceiveCoordinates(self, request, context):
@@ -34,7 +36,6 @@ class Listener(algocomm_pb2_grpc.algoServicer):
         # ("OBS:X:Y:Dir:X:Y:Dir:...")
         
         obs_string = string_data.obs_value
-        
         print(f"[Sending obstacle string to algo...]: {obs_string}")
         
         response.obstacles = obs_string
@@ -50,9 +51,16 @@ class Listener(algocomm_pb2_grpc.algoServicer):
 
     def UpdateStatus(self, request, context):
         status_string = request.status
-        string_data.status = status_string
+        # ST: RTS, RS, PLAN, MOV, STCI, IC, C
+
+        f_result = (f"ST:{status_string}")
+        string_data.status = f_result
         
-        print(f"[Algo sent a status update to Android]: Robot coordinates: {status_string}")
+        if status_string == 'C':
+            print("Robot move completed. Terminating the server.")
+            
+
+        print(f"[Algo sent a status update to Android]: Status: {f_result}")
 
         return algocomm_pb2.Empty()
 
@@ -64,7 +72,7 @@ class Listener(algocomm_pb2_grpc.algoServicer):
         distance = request.distance
         # send a move_request to the stm server, returns the time required for the move
         time_required = stm_client.Stm_Client().move_request(radius_index, distance)
-        response = algocomm_pb2.MoveResponse(time_required=(time_required.seconds-1e-9))
+        response = algocomm_pb2.MoveResponse(time_required=(time_required.ToNanoseconds() / 1e9))
 
         print(f"[Algo sent a move request to the Stm]: Radius_index: {radius_index}, Distance: {distance}, Time required: {time_required}")
         return response
@@ -79,26 +87,43 @@ class Listener(algocomm_pb2_grpc.algoServicer):
         print(f"[Algo sent a get radii request to the Stm]: List of radii: {radii}")
         return response
     
+        # the picture classification result. eg. id:1
     def TakePicture(self, request, context):
-        image_client.Image_Client().process_pic()
-        print("[Algo sent a take picture request to Image]")
+        result = image_client.Image_Client().process_pic()
+        print(f"[Algo sent a take picture request to Image]: The result is {result}")
+        if request.id == 0:
+            print("Model did not identify any possible image")
+        
+        string_data.pic_result = (f"TT:{request.id}:{result}")
+
+        print(f"Current pic_updated value is {string_data.pic_updated}")
+        string_data.pic_updated = string_data.pic_updated + 1
+        
+        #time.sleep(1)
         return algocomm_pb2.Empty()
         
 
 class Algo_Server:
     def __init__(self):
         self.algo_server = Listener()
-        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=3))
         algocomm_pb2_grpc.add_algoServicer_to_server(self.algo_server, self.server)
         self.server.add_insecure_port('0.0.0.0:9999')
+        self.connected = False
+
+        print("Initializing Algo Server")
 
     def connect(self):
         print('Starting Algo server on port 9999.')
         self.server.start()
+        self.connected = True
         try:
             while True:
-                print("Number of threads: " + str(threading.active_count()))
-                time.sleep(86400)
+                if self.connected:
+                    print("Number of threads: " + str(threading.active_count()))
+                    time.sleep(30)
+                else:
+                    break
 
         except KeyboardInterrupt:
             print("Keyboard Interrupt")
@@ -106,6 +131,11 @@ class Algo_Server:
 
     def disconnect(self):
         print("Disconnecting Algo server")
+        
+        # send a move request to stop the robot before shutting down
+        stm_client.Stm_Client().move_cancel()
+        self.server.wait_for_termination(timeout=None)
+        self.server.stop(None)
 
 
 if __name__ == "__main__":

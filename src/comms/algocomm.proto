@@ -19,7 +19,7 @@ service algo {
   rpc MoveVirtual(RobotPosition) returns (Empty) {}
 
   // Client sends a request to take picture
-  rpc TakePicture(Empty) returns (Empty) {}
+  rpc TakePicture(ImageID) returns (Empty) {}
 
   // Client updates the current status
   rpc UpdateStatus(StatusString) returns (Empty) {}
@@ -45,6 +45,10 @@ message StatusString {
 // Obstacle string ("OBS:X:Y:Dir:X:Y:Dir:...") to be received from rPi.
 message ObstacleString {
   string obstacles = 1;
+}
+
+message ImageID {
+  string id = 1;
 }
 
 // Current robot coordinates to be sent to the rPi.

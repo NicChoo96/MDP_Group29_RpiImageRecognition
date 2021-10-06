@@ -1,58 +1,77 @@
+import time
+import grpc
+
 import imagecomm_pb2
 import imagecomm_pb2_grpc
-import grpc
+import camera_setup
+
 from picamera import PiCamera
 from picamera.array import PiRGBArray
-import time
 
-def take_picture():
-    try:
-        camera = PiCamera()
-        camera.resolution = (640,480)
-        # 3D RGB numpy array (row, col, colour)
-        picArray = PiRGBArray(camera)
-            
-        # camera warm up time
-        time.sleep(0.1)
-        # OpenCV takes bgr
-        camera.capture(picArray,format='jpeg')
-        #image = picArray.array
-        #print(image)
-        camera.close()
+class Image_Client:
 
-        print('Image taken successfully')
-
-    except Exception as error:
-        print('Error while taking picture: ' + str(error))
+    def __init__(self):
+        self.img_ip = '192.168.29.202'
+        self.img_port = '50051'
+        # open a gRPC channel
+        self.channel = grpc.insecure_channel('{}:{}'.format(self.img_ip, self.img_port))
+        # create a stub (client)
+        self.stub = imagecomm_pb2_grpc.ImageCommStub(self.channel)
         
-    # converts the image into a 1D array   
-    # array = image.reshape(-1)
-    #print(array)
-    return picArray
+        camera_setup.init()
 
-def process_pic():
-    try:
-        channel = grpc.insecure_channel('127.0.0.1:12345')
-        stub = imagecomm_pb2_grpc.ImageCommStub(channel)
+    
+    def take_picture(self):
+        try:
+            # camera = PiCamera(resolution = '640x480')
+            # 3D RGB numpy array (row, col, colour)
             
-        # take picture and convert it to 1D
-        picture = take_picture()
+            # camera warm up time
+            # time.sleep(2)
+            # OpenCV takes bgr, resize = '640x480'
+
+            camera = camera_setup.camera
+            picArray = PiRGBArray(camera)
+            camera.capture(picArray, format='bgr')
+            image = picArray.array
+            # camera.close()
+            
+            print('Image taken successfully')
+
+        except Exception as error:
+            print('Error while taking picture: ' + str(error))
         
-        # update image on server
-        request = imagecomm_pb2.PicArray()
-        #request.image.extend(picture)
-        request.image = picture
+        # converts the image into a 1D array   
+        array = image.reshape(-1)
+        #print(array)
+        return array
+
+    def process_pic(self):
+        try:
+            #channel = grpc.insecure_channel('192.168.1.218:12345')
+            #stub = imagecomm_pb2_grpc.ImageCommStub(channel)
             
-        # result of the image recognition model
-        print("Image processing...")
-        result = stub.ProcessImage(request)
+            # take picture and convert it to 1D
+            picture = self.take_picture()
+        
+            # update image on server
+            request = imagecomm_pb2.PicArray()
+            request.image.extend(picture)
+            # result of the image recognition model
+            print("Image processing...")
+            result = self.stub.ProcessImage(request)
+            print("done result")
             
-        print(result)
+            print(result)
             
-    except Exception as error:
-        print("Error when processing picture: " + str(error))
+        except Exception as error:
+            print("Error when processing picture: " + str(error))
+
+    def stop_server(self):
+        self.stub.StopServer()
+        print("Stopping the image server")
         
 
 if __name__ == "__main__":
-    process_pic()
+    Image_Client().process_pic()
 

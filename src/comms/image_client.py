@@ -4,6 +4,7 @@ import grpc
 from src.comms import imagecomm_pb2
 from src.comms import imagecomm_pb2_grpc
 from src.comms import camera_setup
+from src.comms import string_data
 
 from picamera import PiCamera
 from picamera.array import PiRGBArray
@@ -11,8 +12,8 @@ from picamera.array import PiRGBArray
 class Image_Client:
 
     def __init__(self):
-        self.img_ip = '127.0.0.1'
-        self.img_port = '12345'
+        self.img_ip = '192.168.29.202'
+        self.img_port = '50051'
         # open a gRPC channel
         self.channel = grpc.insecure_channel('{}:{}'.format(self.img_ip, self.img_port))
         # create a stub (client)
@@ -34,7 +35,7 @@ class Image_Client:
             image = picArray.array
             # camera.close()
             
-            print('Image taken successfully')
+            print('[Image taken successfully]')
 
         except Exception as error:
             print('Error while taking picture: ' + str(error))
@@ -55,12 +56,16 @@ class Image_Client:
             # update image on server
             request = imagecomm_pb2.PicArray()
             request.image.extend(picture)
+
+            # count = 1 means last image
+            request.count = string_data.obs_count - 1
+            string_data.obs_count -= 1
+            print(f"[Remaining obstacle count]: {string_data.obs_count}")
             # result of the image recognition model
-            print("Image processing...")
-            result = self.stub.ProcessImage(request)
-            print("done result")
+            print("[Sending image to the server]")
+            response = self.stub.ProcessImage(request)
             
-            # print(result)
+            return response.result
             
         except Exception as error:
             print("Error when processing picture: " + str(error))
