@@ -58,7 +58,7 @@ class Image_Client:
             request.image.extend(picture)
 
             # count = 1 means last image
-            request.count = string_data.obs_count - 1
+            request.count = string_data.obs_count
             string_data.obs_count -= 1
             print(f"[Remaining obstacle count]: {string_data.obs_count}")
             # result of the image recognition model

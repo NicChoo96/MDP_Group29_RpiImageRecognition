@@ -1,3 +1,4 @@
+from google.protobuf import empty_pb2
 import grpc
 import time
 
@@ -46,7 +47,7 @@ class Stm_Client:
     def move_cancel(self):
         print("Sending a cancel move request")
         try:
-            self.stub.MoveCancel()
+            self.stub.MoveCancel(empty_pb2)
         
         except Exception as error:
             print("Move cancel failed")

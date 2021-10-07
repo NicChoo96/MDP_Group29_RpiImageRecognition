@@ -76,6 +76,7 @@ class Multicomms:
                     if string_data.obs_value != 'No value':
                         string_data.start = True
                         print("Android read thread is closed")
+                        self.timer()
                         break
                     print("Can't start. You have not given the obstacle information...")
                     continue
@@ -84,6 +85,7 @@ class Multicomms:
                 string_data.obs_value = android_string
                 
                 string_data.obs_count = self.count_obstacle(android_string)
+                print(f"[OBS COUNT]:{string_data.obs_count}")
 
             except Exception as error:
                 print(str(error))
@@ -119,12 +121,13 @@ class Multicomms:
                 self.disconnect()
 
     def count_obstacle(self, obs_string):
-        text = obs_string.split(':')
-        count = (len(text)-1) / 3
+        text = obs_string.split(':X')
+        count = 8 - (len(text)-1)
         return int(count)
 
+    # this function handles the shutdown of the robot
     def timer(self):
-        time.sleep(360)
+        time.sleep(240)
         self.disconnect()
 
 
