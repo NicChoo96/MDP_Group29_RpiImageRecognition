@@ -31,7 +31,7 @@ class Image_Client:
 
             camera = camera_setup.camera
             picArray = PiRGBArray(camera)
-            camera.capture(picArray, format='bgr')
+            camera.capture(picArray, format='bgr', resize=(640,480))
             image = picArray.array
             # camera.close()
             

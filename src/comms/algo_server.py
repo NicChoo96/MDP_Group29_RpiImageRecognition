@@ -118,12 +118,9 @@ class Algo_Server:
         self.server.start()
         self.connected = True
         try:
-            while True:
-                if self.connected:
-                    print("Number of threads: " + str(threading.active_count()))
-                    time.sleep(30)
-                else:
-                    break
+            while self.connected:
+                print("Number of threads: " + str(threading.active_count()))
+                time.sleep(20)
 
         except KeyboardInterrupt:
             print("Keyboard Interrupt")
@@ -132,10 +129,15 @@ class Algo_Server:
     def disconnect(self):
         print("Disconnecting Algo server")
         
-        # send a move request to stop the robot before shutting down
-        stm_client.Stm_Client().move_cancel()
-        self.server.wait_for_termination(timeout=None)
+        self.connected = False
+        print("[Algo server connect status]: s")
         self.server.stop(None)
+        
+        # send a move request to stop the robot before shutting down
+        try: 
+            stm_client.Stm_Client().move_cancel()
+        except Exception as error:
+            print(str(error))
 
 
 if __name__ == "__main__":

@@ -19,6 +19,9 @@ from src.comms import image_client
 from src.comms import imagecomm_pb2
 from src.comms import imagecomm_pb2_grpc
 
+import sys
+sys.path.append('/home/pi/a5/')
+from robotmain import FastestCar
 
 
 # import stmclient.py
@@ -28,29 +31,30 @@ class Multicomms:
 
         print("Initializing Multithreading Comms...")
 
-        self.algo = algo_server.Algo_Server()
+        #self.algo = algo_server.Algo_Server()
         self.android = android_server.Android_Server()
         self.stm = stm_client.Stm_Client().ping_request()
+        self.fc = FastestCar()
         
         string_data.init()
-        camera_setup.init()
+        #camera_setup.init()
 
     def start(self):
         try:
 
-            t1 = threading.Thread(target=self.algo.connect)
+            #t1 = threading.Thread(target=self.algo.connect)
             t2 = threading.Thread(target=self.android.connect)
-            t3 = threading.Thread(target=self.write_android)
+            #t3 = threading.Thread(target=self.write_android)
             t4 = threading.Thread(target=self.read_android)
             
-            t1.start()
+            #t1.start()
             t2.start()
-            t3.start()
+            #t3.start()
             t4.start()
             t4.join()
-            t3.join()
+            #t3.join()
             t2.join()
-            t1.join()
+            #t1.join()
             print("All threads terminated.")
             
         except Exception as error:
@@ -71,21 +75,35 @@ class Multicomms:
                 android_string = android_string.decode("utf-8")
                 print(f"[Decoded string is...] : {android_string}")
                 
-                # check if start is issued 
+                if android_string.split(':')[0] == 'OBS':
+                    print("[Measuring and planning route]")
+                    self.fc.measure_and_plan()
+                
                 if android_string == 'START':
-                    if string_data.obs_value != 'No value':
-                        string_data.start = True
-                        print("Android read thread is closed")
-                        self.timer()
-                        break
-                    print("Can't start. You have not given the obstacle information...")
-                    continue
+                    print("[STARTING]")
+                    start = time.time()
+                    self.fc.start()
+                    end = time.time()
+                    x = end - start
+                    print(f"Time taken for move: {x}")
+                # check if start is issued 
+                #if android_string == 'START':
+                    # .start() here
+                    #break
+                    #if string_data.obs_value != 'No value':
+                    #    string_data.start = True
+                    #    print("Android read thread is closed")
+                    #    self.timer()
+                    #    break
+                    #print("Can't start. You have not given the obstacle information...")
+                    #continue
                 
                 # update obs_value only if its different
-                string_data.obs_value = android_string
+
+                # string_data.obs_value = android_string
                 
-                string_data.obs_count = self.count_obstacle(android_string)
-                print(f"[OBS COUNT]:{string_data.obs_count}")
+                # string_data.obs_count = self.count_obstacle(android_string)
+                # print(f"[OBS COUNT]:{string_data.obs_count}")
 
             except Exception as error:
                 print(str(error))
@@ -127,7 +145,7 @@ class Multicomms:
 
     # this function handles the shutdown of the robot
     def timer(self):
-        time.sleep(240)
+        time.sleep(360)
         self.disconnect()
 
 
@@ -135,3 +153,4 @@ class Multicomms:
         print("Terminating connection with android and algo")
         self.algo.disconnect()
         self.android.disconnect()
+        exit()
